@@ -18,3 +18,4 @@ override.tf.json
 
 
 игнорировать с расширением .terraformrc и файл terraform.rc
+

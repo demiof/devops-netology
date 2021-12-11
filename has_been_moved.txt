@@ -2,3 +2,4 @@ will_be_moved
 
 123
 234
+Addded new string #798

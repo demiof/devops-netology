@@ -33,20 +33,19 @@
 >Вариант2 - верный, с генерацией патча, если не указать -1 после -p не отфильтруется вывод после вхождения 'aefea' 
 
 	root@dev1-10:/home/demi/netol_do/terraform# git log -p -1 aefea
-	
 	commit aefead2207ef7e2aa5dc81a34aedf0cad4c32545
 	Author: Alisdair McDiarmid <alisdair@users.noreply.github.com>
 	Date:   Thu Jun 18 10:29:58 2020 -0400
 	 
 	Update CHANGELOG.md
-	 
+ 
 	diff --git a/CHANGELOG.md b/CHANGELOG.md
 	index 86d70e3e0..588d807b1 100644
 	--- a/CHANGELOG.md
 	+++ b/CHANGELOG.md
 	@@ -27,6 +27,7 @@ BUG FIXES:
- 	* backend/s3: Prefer AWS shared configuration over EC2 metadata credentials by default ([#25134](https://github.com/hashicorp/terraform/issues/25134))
- 	* backend/s3: Prefer ECS credentials over EC2 metadata credentials by default ([#25134](https://github.com/hashicorp/terraform/issues/25134))
+	* backend/s3: Prefer AWS shared configuration over EC2 metadata credentials by default ([#25134](https://github.com/hashicorp/terraform/issues/25134))
+	* backend/s3: Prefer ECS credentials over EC2 metadata credentials by default ([#25134](https://github.com/hashicorp/terraform/issues/25134))
 	* backend/s3: Remove hardcoded AWS Provider messaging ([#25134](https://github.com/hashicorp/terraform/issues/25134))
 	+* command: Fix bug with global `-v`/`-version`/`--version` flags introduced in 0.13.0beta2 [GH-25277]
 	* command/0.13upgrade: Fix `0.13upgrade` usage help text to include options ([#25127](https://github.com/hashicorp/terraform/issues/25127))
@@ -57,10 +56,10 @@
 
 ## 2. Какому тегу соответствует коммит 85024d3?
 
- git log -p -1 85024d3
+	git log -p -1 85024d3
+	
+	tag: v0.12.23
 
-
- tag: v0.12.23
 
 > Почему-то не получилось(: git log -p -1 85024d3 | grep -e "\(tag: [a-zA-Z]{0}(.[0-9]{0,4}){0,10}\)$"
 
@@ -220,4 +219,3 @@
 
 > На всякий случай, удостоверяемся, что данного файла действительно нет в раб. папке на тек. момент:
 
-	find . -name synchronized_writers.go

@@ -1,9 +1,9 @@
-Выполнение ДЗ 2.3 - Инструмнты Git:
+#Выполнение ДЗ 2.3 - Инструмнты Git:
 
 
-1. Найдите полный хеш и комментарий коммита, хеш которого начинается на aefea.
+#№1. Найдите полный хеш и комментарий коммита, хеш которого начинается на aefea.
 
-#Вариант1 - не совсем верный, как оказалось, т.к. git log --oneline выводит постранично, и найденный ниже хэш, видимо был на первой странице)
+###Вариант1 - не совсем верный, как оказалось, т.к. git log --oneline выводит постранично, и найденный ниже хэш, видимо был на первой странице)
 
 root@dev1-10:/home/demi/netol_do/terraform# git log --oneline | grep aefea
 aefead220 Update CHANGELOG.md
@@ -30,7 +30,7 @@ index 86d70e3e0..588d807b1 100644
  * command/0.13upgrade: Do not add source for builtin provider ([#25215](https://github.com/hashicorp/terraform/issues/25215))
  * command/apply: Fix bug which caused Terraform to silently exit on Windows when using absolute plan path ([#25233](https://github.com/hashicorp/terraform/issues/25233))
 
-#Вариант2 - верный, с генерацией патча, если не указать -1 после -p не отфильтруется вывод после вхождения 'aefea' 
+###Вариант2 - верный, с генерацией патча, если не указать -1 после -p не отфильтруется вывод после вхождения 'aefea' 
 
 root@dev1-10:/home/demi/netol_do/terraform# git log -p -1 aefea
 commit aefead2207ef7e2aa5dc81a34aedf0cad4c32545
@@ -54,18 +54,18 @@ index 86d70e3e0..588d807b1 100644
 
 
 
-2. Какому тегу соответствует коммит 85024d3?
+#2. Какому тегу соответствует коммит 85024d3?
 
 git log -p -1 85024d3
 
 
 tag: v0.12.23
 
-#Почему-то не получилось(: git log -p -1 85024d3 | grep -e "\(tag: [a-zA-Z]{0}(.[0-9]{0,4}){0,10}\)$"
+###Почему-то не получилось(: git log -p -1 85024d3 | grep -e "\(tag: [a-zA-Z]{0}(.[0-9]{0,4}){0,10}\)$"
 
 
 
-3. Сколько родителей у коммита b8d720? Напишите их хэши. 
+#3. Сколько родителей у коммита b8d720? Напишите их хэши. 
 
 
 root@dev1-10:/home/demi/netol_do/terraform# git log b8d720 -4 --oneline --graph
@@ -79,11 +79,11 @@ root@dev1-10:/home/demi/netol_do/terraform# git log b8d720 -4 --oneline --graph
 |/  
 
 
-#2 родителя с хэшами: 9ea88f22f,  56cd7859e  
+###2 родителя с хэшами: 9ea88f22f,  56cd7859e  
 
 
 
-4. Перечислите хеши и комментарии всех коммитов которые были сделаны между тегами v0.12.23 и v0.12.24.
+#4. Перечислите хеши и комментарии всех коммитов которые были сделаны между тегами v0.12.23 и v0.12.24.
 
 root@dev1-10:/home/demi/netol_do/terraform# git log v0.12.24 ^v0.12.22
 commit 33ff1c03bb960b332be3af2e333462dde88b279e (tag: v0.12.24)
@@ -175,21 +175,21 @@ Date:   Thu Mar 5 20:24:20 2020 +0000
     Cleanup after v0.12.22 release
 
 
-5. Найдите коммит в котором была создана функция func providerSource, ее определение в коде выглядит так func providerSource(...) (вместо троеточего перечислены аргументы).
+#5. Найдите коммит в котором была создана функция func providerSource, ее определение в коде выглядит так func providerSource(...) (вместо троеточего перечислены аргументы).
 
-#Ищем файл, где определялась providerSource()
+###Ищем файл, где определялась providerSource()
 root@dev1-10:/home/demi/netol_do/terraform# git grep -p 'func providerSource(' .
 provider_source.go=import (
 provider_source.go:func providerSource(configs []*cliconfig.ProviderInstallation, services *disco.Disco) (getproviders.Source, tfdiags.Diagnostics) {
 root@dev1-10:/home/demi/netol_do/terraform#
-#Это файл provider_source,go
-#Далее по журналу изменения строки:
+###Это файл provider_source,go
+###Далее по журналу изменения строки:
 git log -L :providerSource:provider_source.go
 commit 8c928e83589d90a031f811fae52a81be7153e82f
 Author: Martin Atkins <mart@degeneration.co.uk>
 Date:   Thu Apr 2 18:04:39 2020 -0700
 
-6. Найдите все коммиты в которых была изменена функция globalPluginDirs.
+#6. Найдите все коммиты в которых была изменена функция globalPluginDirs.
 
 git log -SglobalPluginDirs | grep -w -e 'commit'
 commit 35a058fb3ddfae9cfee0b3893822c9a95b920f4c
@@ -197,11 +197,11 @@ commit c0b17610965450a89598da491ce9b6b5cbd6393f
 commit 8364383c359a6b738a436d1b7745ccdce178df47
 
 
-7. Кто автор функции synchronizedWriters?
+#7. Кто автор функции synchronizedWriters?
 
-#Возможно найти только с помощью поиска по журналу, т.к. данная функция вместе с файлом была удалена:
+###Возможно найти только с помощью поиска по журналу, т.к. данная функция вместе с файлом была удалена:
 git log -S synchronizedWriters
-#Первым, где она упоминалась был commit 5ac311e2a91e381e2f52234668b49ba670aa0fe5 
+###Первым, где она упоминалась был commit 5ac311e2a91e381e2f52234668b49ba670aa0fe5 
 git show 5ac311e2a91e381e2f52234668b49ba670aa0fe5
 
 commit 5ac311e2a91e381e2f52234668b49ba670aa0fe5
@@ -211,6 +211,6 @@ Date:   Wed May 3 16:25:41 2017 -0700
 ...
 
 
-#На всякий случай, удостоверяемся, что данного файла действительно нет в раб. папке на тек. момент:
+###На всякий случай, удостоверяемся, что данного файла действительно нет в раб. папке на тек. момент:
 find . -name synchronized_writers.go
 

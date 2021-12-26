@@ -24,9 +24,9 @@
 
 # Создайте директорию, в которой будут храниться конфигурационные файлы Vagrant. В ней выполните vagrant init. Замените содержимое Vagrantfile по умолчанию следующим:
 
- Vagrant.configure("2") do |config|
- 	config.vm.box = "bento/ubuntu-20.04"
- end
+  Vagrant.configure("2") do |config|
+  	config.vm.box = "bento/ubuntu-20.04"
+  end
 
 > Готово.
 

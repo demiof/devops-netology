@@ -14,7 +14,7 @@
 
 > Готово. Работал в WinPS для этого установил менеджер пакетов choco:
 
- choco install vim
+	choco install vim
 
 > Преимуество относительно графической установки - отсутствие необходимости прописывать Set-Alias в $profile
 
@@ -24,11 +24,11 @@
 
 # Создайте директорию, в которой будут храниться конфигурационные файлы Vagrant. В ней выполните vagrant init. Замените содержимое Vagrantfile по умолчанию следующим:
 
-`
- Vagrant.configure("2") do |config|
- 	config.vm.box = "bento/ubuntu-20.04"
- end
-`
+
+	 Vagrant.configure("2") do |config|
+		config.vm.box = "bento/ubuntu-20.04"
+	 end
+
 
 > Готово.
 
@@ -102,7 +102,6 @@
 
 	end
 	 
-	end
 	  
 
 

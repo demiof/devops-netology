@@ -52,7 +52,7 @@
   
   
   
-  (1..3).each do |i|
+ (1..3).each do |i|
   
   
           config.vm.provider "virtualbox" do |v|
@@ -60,10 +60,10 @@
           end
   
   
-  end
+ end
   
   
-  config.vm.define "netodo-1" do |netodo1|
+ config.vm.define "netodo-1" do |netodo1|
           netodo1.vm.box = "gusztavvargadr/visual-studio"
           netodo1.vm.provider "virtualbox" do |v|
                   v.name = "netodo1"

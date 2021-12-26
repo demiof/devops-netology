@@ -36,16 +36,16 @@
 
 > В цикле создадим три контейнера, сконфигурим для каждого ресурсы: 
 
- PS C:\Users\demi\VirtualBox VMs\Vagrant> cat .\Vagrantfile
- Vagrant.configure("2") do |config|
- =begin
-          config.vm.box = "bento/ubuntu-20.04"
-  
-          config.vm.provider "virtualbox" do |v|
-                  v.name = "netodo"
+PS C:\Users\demi\VirtualBox VMs\Vagrant> cat .\Vagrantfile
+Vagrant.configure("2") do |config|
+=begin
+         config.vm.box = "bento/ubuntu-20.04"
+ 
+         config.vm.provider "virtualbox" do |v|
+                 v.name = "netodo"
                   v.linked_clone = true
-          end
-  =end
+         end
+=end
   
   
   

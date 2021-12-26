@@ -36,75 +36,75 @@
 
 > В цикле создадим три контейнера, сконфигурим для каждого ресурсы: 
 
-`
- PS C:\Users\demi\VirtualBox VMs\Vagrant> cat .\Vagrantfile
 
- Vagrant.configure("2") do |config|
+	PS C:\Users\demi\VirtualBox VMs\Vagrant> cat .\Vagrantfile
 
-  
- (1..3).each do |i|
-  
-  
-          config.vm.provider "virtualbox" do |v|
+	Vagrant.configure("2") do |config|
+	
+	  
+	(1..3).each do |i|
+	  
+ 	 
+	          config.vm.provider "virtualbox" do |v|
                   v.name = "netodo-#{i}"
-          end
-  
-  
- end
-  
-  
- config.vm.define "netodo-1" do |netodo1|
-          netodo1.vm.box = "gusztavvargadr/visual-studio"
-          netodo1.vm.provider "virtualbox" do |v|
-                  v.name = "netodo1"
-                  v.gui = true
-                          v.memory = 1024
-                          v.cpus = 2
-                          v.default_nic_type = "virtio"
-                          v.linked_clone = true
-          end
-          netodo1.vm.network "public_network", ip: "172.16.0.1", hostname: true
-          netodo1.vm.network "private_network", ip: "172.16.1.1"
-          netodo1.vm.network "forwarded_port", guest: 80, host: 8080
-          netodo1.vm.hostname = "netodo1"
-  end
+	          end
+ 	 
+ 	 
+	 end
+	  
+	  
+	 config.vm.define "netodo-1" do |netodo1|
+		 netodo1.vm.box = "gusztavvargadr/visual-studio"
+		 netodo1.vm.provider "virtualbox" do |v|
+			 v.name = "netodo1"
+			 v.gui = true
+			 v.memory = 1024
+			 v.cpus = 2
+			 v.default_nic_type = "virtio"
+			 v.linked_clone = true
+		 end
+		 netodo1.vm.network "public_network", ip: "172.16.0.1", hostname: true
+		 netodo1.vm.network "private_network", ip: "172.16.1.1"
+		 netodo1.vm.network "forwarded_port", guest: 80, host: 8080
+		 netodo1.vm.hostname = "netodo1"
+	 end
 
-  config.vm.define "netodo-2" do |netodo2|
-          netodo2.vm.box = "gusztavvargadr/windows-10"
-          netodo2.vm.provider "virtualbox" do |v|
-                  v.name = "netodo2"
-                          v.gui = true
-                          v.memory = 2048
-                          v.cpus = 2
-                          v.default_nic_type = "virtio"
-                          v.linked_clone = true
-          end
-          netodo2.vm.network "public_network", ip: "172.16.0.2", hostname: true
-          netodo2.vm.network "private_network", ip: "172.16.1.2"
-          netodo2.vm.network "forwarded_port", guest: 80, host: 8080
-          netodo2.vm.hostname = "netodo2"
-  end
-  
-  config.vm.define "netodo-3" do |netodo3|
-          netodo3.vm.box = "bento/ubuntu-20.04"
-          netodo3.vm.provider "virtualbox" do |v|
-                  v.name = "netodo3"
-                  v.gui = true
-                  v.memory = 512
-                  v.cpus = 2
-                  v.default_nic_type = "virtio"
-                  v.linked_clone = true
-          end
-          netodo3.vm.network "public_network", ip: "172.16.0.3", hostname: true
-          netodo3.vm.network "private_network", ip: "172.16.1.3"
-          netodo3.vm.network "forwarded_port", guest: 80, host: 8080
-          netodo3.vm.hostname = "netodo3"
-  
-  end
-  
-  end
-  
-`
+	 config.vm.define "netodo-2" do |netodo2|
+		 netodo2.vm.box = "gusztavvargadr/windows-10"
+		 netodo2.vm.provider "virtualbox" do |v|
+			 v.name = "netodo2"
+			 v.gui = true
+			 v.memory = 2048
+			 v.cpus = 2
+			 v.default_nic_type = "virtio"
+			 v.linked_clone = true
+		  end
+		  netodo2.vm.network "public_network", ip: "172.16.0.2", hostname: true
+		  netodo2.vm.network "private_network", ip: "172.16.1.2"
+		  netodo2.vm.network "forwarded_port", guest: 80, host: 8080
+		  netodo2.vm.hostname = "netodo2"
+	end
+	  
+	config.vm.define "netodo-3" do |netodo3|
+		 netodo3.vm.box = "bento/ubuntu-20.04"
+		 netodo3.vm.provider "virtualbox" do |v|
+			 v.name = "netodo3"
+			 v.gui = true
+			 v.memory = 512
+			 v.cpus = 2
+			 v.default_nic_type = "virtio"
+			 v.linked_clone = true
+		 end
+		 netodo3.vm.network "public_network", ip: "172.16.0.3", hostname: true
+		 netodo3.vm.network "private_network", ip: "172.16.1.3"
+		netodo3.vm.network "forwarded_port", guest: 80, host: 8080
+		 netodo3.vm.hostname = "netodo3"
+
+	end
+	 
+	end
+	  
+
 
 
 
@@ -138,26 +138,26 @@
 > Директива для переменной оболочки параметров bash применяет опции HISTCONTROL способ отображения историии в ~/bash_history. Одновременно применяет действие обеих директив ignorespace (не сохранять строки, начинающиеся с символа пробел) и ignoredups - не сохранять строки, совпадающие с последней выполненной коммандой.
 > Например, действенно:
 
- export HISTSIZE=10000
- export HISTFILESIZE=10000
- export HISTCONTROL=ignoreboth:erasedups
- export PROMT_COMMAND='history -a'
- export HISTTIMEFORMAT='%d.%m.%Y %H:%M:%S: '
- 
- source ~/.bashrc
+	 export HISTSIZE=10000
+	 export HISTFILESIZE=10000
+	 export HISTCONTROL=ignoreboth:erasedups
+	 export PROMT_COMMAND='history -a'
+	 export HISTTIMEFORMAT='%d.%m.%Y %H:%M:%S: '
+	 
+	 source ~/.bashrc
 
 > Директива erasedups - удалит все дубликаты. source ~/.bashrc применит введенные переменные оболочки, среди которых PROMT_COMMAND будет применять в ~/.bash_historyвведенное сразу, а не по завершению терминальной сессии, которая может порваться например, а HISTTIMEFORMAT установит таймстамп для каждого ввода. 
 > Далее можно сохранить все в файл с помощью:
  
- cat <<EOT >> ~/.bashrc
- export HISTSIZE=10000
- export HISTFILESIZE=10000
- export HISTCONTROL=ignoreboth:erasedups
- export PROMT_COMMAND='history -a'
- export HISTTIMEFORMAT='%d.%m.%Y %H:%M:%S: '
- EOT
+	 cat <<EOT >> ~/.bashrc
+	 export HISTSIZE=10000
+	 export HISTFILESIZE=10000
+	 export HISTCONTROL=ignoreboth:erasedups
+	 export PROMT_COMMAND='history -a'
+	 export HISTTIMEFORMAT='%d.%m.%Y %H:%M:%S: '
+	 EOT
 
- source ~/.bashrc
+	 source ~/.bashrc
 
 > И отправить и применить файл на все машины. Timestamp хранится в ~/.bash_history в кол-ве сек с эпохи Юникса, но выполнение history даст то, что хотели с человекочитаемым timestamp.
 
@@ -169,34 +169,34 @@
 
 ### С учётом ответа на предыдущий вопрос, как создать однократным вызовом touch 100000 файлов? Получится ли аналогичным образом создать 300000? Если нет, то почему?
 
-    23  26.12.2021 15:16:47: mkdir test
-    24  26.12.2021 15:16:51: cd test/
-    25  26.12.2021 15:20:34: pwd
-    26  26.12.2021 15:21:21: chmod 755 test.sh 
-    27  26.12.2021 15:21:22: ls -la
-    28  26.12.2021 15:22:15: vim test.sh
-    29  26.12.2021 15:22:30: ./test.sh 
-    30  26.12.2021 15:24:47: ls
-    31  26.12.2021 15:24:57: ls -la ./123/
-    32  26.12.2021 15:25:25: vim ./test.sh 
-    33  26.12.2021 15:27:13: tail -n 20 ~/.bash_history 
-    34  26.12.2021 15:27:36: history
- root@dev1-10:~/test# 
- root@dev1-10:~/test# 
- root@dev1-10:~/test# cat ./test.sh 
- #!/bin/bash
- mkdir 123
- cd 123
- for ((i=0; i<100000; i++))
-         {
-                 touch $i;
- 
- 
-         }
+	    23  26.12.2021 15:16:47: mkdir test
+	    24  26.12.2021 15:16:51: cd test/
+	    25  26.12.2021 15:20:34: pwd
+	    26  26.12.2021 15:21:21: chmod 755 test.sh 
+	    27  26.12.2021 15:21:22: ls -la
+	    28  26.12.2021 15:22:15: vim test.sh
+	    29  26.12.2021 15:22:30: ./test.sh 
+	    30  26.12.2021 15:24:47: ls
+	    31  26.12.2021 15:24:57: ls -la ./123/
+	    32  26.12.2021 15:25:25: vim ./test.sh 
+	    33  26.12.2021 15:27:13: tail -n 20 ~/.bash_history 
+	    34  26.12.2021 15:27:36: history
+	 root@dev1-10:~/test# 
+	 root@dev1-10:~/test# 
+	 root@dev1-10:~/test# cat ./test.sh 
+	 #!/bin/bash
+	 mkdir 123
+	 cd 123
+	 for ((i=0; i<100000; i++))
+		 {
+			 touch $i;
+	 
+	 
+		 }
 
- root@dev1-10:~/test# ls -lah ./123/ | wc -l
- 100003
- root@dev1-10:~/test# 
+	 root@dev1-10:~/test# ls -lah ./123/ | wc -l
+	 100003
+	 root@dev1-10:~/test# 
 
 > В данном случае, созданные файлы имеют нулевой размер, с использванием зарезвервировнанной {, поэтому 300000 не должно быть проблемой.
 
@@ -209,25 +209,26 @@
 
 ### Основываясь на знаниях о просмотре текущих (например, PATH) и установке новых переменных; командах, которые мы рассматривали, добейтесь в выводе type -a bash в виртуальной машине наличия первым пунктом в списке:
 
- bash is /tmp/new_path_directory/bash
- bash is /usr/local/bin/bash
- bash is /bin/bash
+	 bash is /tmp/new_path_directory/bash
+	 bash is /usr/local/bin/bash
+	 bash is /bin/bash
+
 ### (прочие строки могут отличаться содержимым и порядком) В качестве ответа приведите команды, которые позволили вам добиться указанного вывода или соответствующие скриншоты.
 
 
- 62  26.12.2021 16:14:01: export PATH=$PATH:/tmp/new_path/directory/bash/
- 63  26.12.2021 16:14:02: export
- 64  26.12.2021 16:16:42: ln -s /tmp/new_path/directory/bash/bash /bin/bash
- 65  26.12.2021 16:17:05: ln -s /bin/bash /tmp/new_path/directory/bash/bash
- 66  26.12.2021 16:17:13: ls -la /tmp/new_path/directory/bash/bash
- 67  26.12.2021 16:17:22: type -a bash
+	 62  26.12.2021 16:14:01: export PATH=$PATH:/tmp/new_path/directory/bash/
+	 63  26.12.2021 16:14:02: export
+	 64  26.12.2021 16:16:42: ln -s /tmp/new_path/directory/bash/bash /bin/bash
+	 65  26.12.2021 16:17:05: ln -s /bin/bash /tmp/new_path/directory/bash/bash
+	 66  26.12.2021 16:17:13: ls -la /tmp/new_path/directory/bash/bash
+	 67  26.12.2021 16:17:22: type -a bash
 
 
- root@dev1-10:~# type -a bash
- bash is /usr/bin/bash
- bash is /bin/bash
- bash is /tmp/new_path/directory/bash/bash
- root@dev1-10:~# 
+	 root@dev1-10:~# type -a bash
+	 bash is /usr/bin/bash
+	 bash is /bin/bash
+	 bash is /tmp/new_path/directory/bash/bash
+	 root@dev1-10:~# 
 
 ### Чем отличается планирование команд с помощью batch и at?
 
@@ -237,4 +238,4 @@
 
 > Готово.
 
- vagrant suspend -a
+	 vagrant suspend -a

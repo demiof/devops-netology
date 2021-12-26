@@ -36,6 +36,7 @@
 
 > В цикле создадим три контейнера, сконфигурим для каждого ресурсы: 
 
+`
  PS C:\Users\demi\VirtualBox VMs\Vagrant> cat .\Vagrantfile
 
  Vagrant.configure("2") do |config|
@@ -103,7 +104,7 @@
   
   end
   
-
+`
 
 
 

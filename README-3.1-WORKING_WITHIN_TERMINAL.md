@@ -229,6 +229,29 @@
 	 bash is /tmp/new_path/directory/bash/bash
 	 root@dev1-10:~# 
 
+
+
+
+
+
+> Получится сделать так, чтобы новый каталог добавлялся в список первым? Пробуем:
+
+
+
+	  222  27.12.2021 14:19:40: ls -la /tmp/new_path/directory/bash/bash
+	  223  27.12.2021 14:21:32: export PATH=/tmp/new_path/directory/bash/:$PATH
+	  224* 27.12.2021 14:21:40: export 
+	  225  27.12.2021 14:21:49: type -a bash
+	  226  27.12.2021 14:21:59: history
+	
+	root@dev1-10:/home/demi/netol_do/devops-netology# type -a bash
+	bash is /tmp/new_path/directory/bash/bash
+	bash is /usr/bin/bash
+	bash is /bin/bash
+
+	
+
+
 ### Чем отличается планирование команд с помощью batch и at?
 
 > Тогда как cron используется для назначения повторяющихся задач, команда at используется для назначения одноразового задания на заданное время, а команда batch — для назначения одноразовых задач, которые должны выполняться, когда загрузка системы становится меньше 0,8.

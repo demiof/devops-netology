@@ -124,8 +124,10 @@
 
 
 	root@dev1-10:/home/demi/netol_do/devops-netology# bash 3>&1 1>&2 2>&3
+
 	root@dev1-10:/home/demi/netol_do/devops-netology# ls /proc/$$/fd
 	0  1  2  255  3
+
 	root@dev1-10:/home/demi/netol_do/devops-netology# ls -la /proc/$$/fd
 	total 0
 	dr-x------ 2 root root  0 Jan 24 06:34 .
@@ -135,8 +137,10 @@
 	lrwx------ 1 root root 64 Jan 24 06:34 2 -> /dev/pts/9
 	lrwx------ 1 root root 64 Jan 24 06:34 255 -> /dev/pts/9
 	lrwx------ 1 root root 64 Jan 24 06:34 3 -> /dev/pts/9
+
 	root@dev1-10:/home/demi/netol_do/devops-netology# ./test_1_2.sh > 3
 	./test_1_2.sh: line 4: cd: 444: No such file or directory
+	
 	root@dev1-10:/home/demi/netol_do/devops-netology# cat test_1_2.sh 
 	#! /bin/bash
 

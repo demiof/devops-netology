@@ -128,9 +128,9 @@
 	root@dev1-10:/home/demi/netol_do/devops-netology# cat test_1_2.sh 
 	#! /bin/bash
 	cd 444 #makes error stderr
-	echo 555 #makes stdout`
+	echo 555 #makes stdout
 	root@dev1-10:/home/demi/netol_do/devops-netology#
-
+	
 
 > или ...
 

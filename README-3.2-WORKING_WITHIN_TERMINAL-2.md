@@ -2,6 +2,10 @@
 
 1. Какого типа команда `cd`? Попробуйте объяснить, почему она именно такого типа; опишите ход своих мыслей, если считаете что она могла бы быть другого типа.
 
+
+> Исходя из вывода type cd делаем вывод, что cd встроенная shell команда и не является комадой типа файл, алиас, функцией или ключевым словом. Так же typ -pне  вернет место расположения исполняемого файла, что подтверждает то, что она встроенная.
+
+
 > Так как мы знаем, что дескриптор файла привязан к идентификатору процесса, и, проверив, что при выполнении cd /home/demi появляется запись вида:
  
  root@dev1-10:/home/demi# lsof -p $$
@@ -44,6 +48,16 @@
 5. Получится ли одновременно передать команде файл на stdin и вывести ее stdout в другой файл? Приведите работающий пример.
 
 
+	root@dev1-10:/home/demi/netol_do/devops-netology# cat tt1.txt 
+	trouble ticket 1
+
+	description of tt1
+	add checklist for resolve tt1
+	root@dev1-10:/home/demi/netol_do/devops-netology# cat tt1.txt | grep ticket > test_3
+	root@dev1-10:/home/demi/netol_do/devops-netology# cat test_3
+	trouble ticket 1
+	root@dev1-10:/home/demi/netol_do/devops-netology# 
+> ...
 
  root@dev1-10:/home/demi/netol_do/devops-netology# tty
  /dev/pts/0
@@ -106,6 +120,32 @@
 8. Получится ли в качестве входного потока для pipe использовать только stderr команды, не потеряв при этом отображение stdout на pty? Напоминаем: по умолчанию через pipe передается только stdout команды слева от `|` на stdin команды справа.
 Это можно сделать, поменяв стандартные потоки местами через промежуточный новый дескриптор, который вы научились создавать в предыдущем вопросе.
 
+
+
+	root@dev1-10:/home/demi/netol_do/devops-netology# bash 3>&1 1>&2 2>&3
+	root@dev1-10:/home/demi/netol_do/devops-netology# ls /proc/$$/fd
+	0  1  2  255  3
+	root@dev1-10:/home/demi/netol_do/devops-netology# ls -la /proc/$$/fd
+	total 0
+	dr-x------ 2 root root  0 Jan 24 06:34 .
+	dr-xr-xr-x 9 root root  0 Jan 24 06:34 ..
+	lrwx------ 1 root root 64 Jan 24 06:34 0 -> /dev/pts/9
+	lrwx------ 1 root root 64 Jan 24 06:34 1 -> /dev/pts/9
+	lrwx------ 1 root root 64 Jan 24 06:34 2 -> /dev/pts/9
+	lrwx------ 1 root root 64 Jan 24 06:34 255 -> /dev/pts/9
+	lrwx------ 1 root root 64 Jan 24 06:34 3 -> /dev/pts/9
+	root@dev1-10:/home/demi/netol_do/devops-netology# ./test_1_2.sh > 3
+	./test_1_2.sh: line 4: cd: 444: No such file or directory
+	root@dev1-10:/home/demi/netol_do/devops-netology# cat test_1_2.sh 
+	#! /bin/bash
+
+
+	cd 444 #makes error stderr
+	echo 555 #makes stdout`
+	root@dev1-10:/home/demi/netol_do/devops-netology#
+
+
+> или ...
 
 
 	root@dev1-10:/home/demi/netol_do/devops-netology# ./test_1_2.sh | sudo tee test_tee >2

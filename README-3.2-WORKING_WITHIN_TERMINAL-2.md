@@ -33,17 +33,16 @@
 	3
 
 3. Какой процесс с PID `1` является родителем для всех процессов в вашей виртуальной машине Ubuntu 20.04?
-
+	
 	root@dev1-10:/home/demi/netol_do/devops-netology# ps aux -q 1
 	USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 	root           1  0.0  0.2 167592  9480 ?        Ss    2021   1:59 /sbin/init
 
 4. Как будет выглядеть команда, которая перенаправит вывод stderr `ls` на другую сессию терминала?
-
+	
 	root@dev1-10:/home/demi/netol_do/devops-netology# tty
 	/dev/pts/0
 	root@dev1-10:/home/demi/netol_do/devops-netology# ls 2>/dev/pts/1
-
 
 5. Получится ли одновременно передать команде файл на stdin и вывести ее stdout в другой файл? Приведите работающий пример.
 
@@ -122,27 +121,12 @@
 
 
 	root@dev1-10:/home/demi/netol_do/devops-netology# bash 3>&1 1>&2 2>&3
-
 	root@dev1-10:/home/demi/netol_do/devops-netology# ls /proc/$$/fd
 	0  1  2  255  3
-
-	root@dev1-10:/home/demi/netol_do/devops-netology# ls -la /proc/$$/fd
-	total 0
-	dr-x------ 2 root root  0 Jan 24 06:34 .
-	dr-xr-xr-x 9 root root  0 Jan 24 06:34 ..
-	lrwx------ 1 root root 64 Jan 24 06:34 0 -> /dev/pts/9
-	lrwx------ 1 root root 64 Jan 24 06:34 1 -> /dev/pts/9
-	lrwx------ 1 root root 64 Jan 24 06:34 2 -> /dev/pts/9
-	lrwx------ 1 root root 64 Jan 24 06:34 255 -> /dev/pts/9
-	lrwx------ 1 root root 64 Jan 24 06:34 3 -> /dev/pts/9
-
 	root@dev1-10:/home/demi/netol_do/devops-netology# ./test_1_2.sh > 3
 	./test_1_2.sh: line 4: cd: 444: No such file or directory
-	
 	root@dev1-10:/home/demi/netol_do/devops-netology# cat test_1_2.sh 
 	#! /bin/bash
-
-
 	cd 444 #makes error stderr
 	echo 555 #makes stdout`
 	root@dev1-10:/home/demi/netol_do/devops-netology#

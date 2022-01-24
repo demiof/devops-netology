@@ -49,10 +49,11 @@
 
 
 	root@dev1-10:/home/demi/netol_do/devops-netology# cat tt1.txt 
-	trouble ticket 1
 
+	trouble ticket 1
 	description of tt1
 	add checklist for resolve tt1
+
 	root@dev1-10:/home/demi/netol_do/devops-netology# cat tt1.txt | grep ticket > test_3
 	root@dev1-10:/home/demi/netol_do/devops-netology# cat test_3
 	trouble ticket 1

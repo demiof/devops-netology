@@ -8,9 +8,9 @@
 
 > Так как мы знаем, что дескриптор файла привязан к идентификатору процесса, и, проверив, что при выполнении cd /home/demi появляется запись вида:
  
- root@dev1-10:/home/demi# lsof -p $$
- COMMAND    PID USER   FD   TYPE DEVICE SIZE/OFF   NODE NAME
- bash    561632 root  cwd    DIR  254,4     4096 131073 /home/demi
+	root@dev1-10:/home/demi# lsof -p $$
+	COMMAND    PID USER   FD   TYPE DEVICE SIZE/OFF   NODE NAME
+	bash    561632 root  cwd    DIR  254,4     4096 131073 /home/demi
 
 > то можно сказать, что:
 > 1. Выполняется открытие файла и ОС создает запись-дескриптор CWD с типом DIR для представления этого файла и сохраняет информацию об этом открытом файле. 
@@ -23,65 +23,63 @@
 
 2. Какая альтернатива без pipe команде `grep <some_string> <some_file> | wc -l`? `man grep` поможет в ответе на этот вопрос. Ознакомьтесь с [документом](http://www.smallo.ruhr.de/award.html) о других подобных некорректных вариантах использования pipe.
 
- grep -c cwd README-3.2-WORKING_WITHIN_TERMINAL-2.md 
+	grep -c cwd README-3.2-WORKING_WITHIN_TERMINAL-2.md 
 
 > аналогично 
 
- root@dev1-10:/home/demi/netol_do/devops-netology# grep cwd README-3.2-WORKING_WITHIN_TERMINAL-2.md  | wc -l
- 3
- root@dev1-10:/home/demi/netol_do/devops-netology# grep -c cwd README-3.2-WORKING_WITHIN_TERMINAL-2.md
- 3
+	root@dev1-10:/home/demi/netol_do/devops-netology# grep cwd README-3.2-WORKING_WITHIN_TERMINAL-2.md  | wc -l
+	3
+	root@dev1-10:/home/demi/netol_do/devops-netology# grep -c cwd README-3.2-WORKING_WITHIN_TERMINAL-2.md
+	3
 
 3. Какой процесс с PID `1` является родителем для всех процессов в вашей виртуальной машине Ubuntu 20.04?
 
- root@dev1-10:/home/demi/netol_do/devops-netology# ps aux -q 1
- USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
- root           1  0.0  0.2 167592  9480 ?        Ss    2021   1:59 /sbin/init
+	root@dev1-10:/home/demi/netol_do/devops-netology# ps aux -q 1
+	USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+	root           1  0.0  0.2 167592  9480 ?        Ss    2021   1:59 /sbin/init
 
 4. Как будет выглядеть команда, которая перенаправит вывод stderr `ls` на другую сессию терминала?
 
- root@dev1-10:/home/demi/netol_do/devops-netology# tty
- /dev/pts/0
- root@dev1-10:/home/demi/netol_do/devops-netology# ls 2>/dev/pts/1
+	root@dev1-10:/home/demi/netol_do/devops-netology# tty
+	/dev/pts/0
+	root@dev1-10:/home/demi/netol_do/devops-netology# ls 2>/dev/pts/1
 
 
 5. Получится ли одновременно передать команде файл на stdin и вывести ее stdout в другой файл? Приведите работающий пример.
 
-
 	root@dev1-10:/home/demi/netol_do/devops-netology# cat tt1.txt 
-
 	trouble ticket 1
 	description of tt1
 	add checklist for resolve tt1
-
 	root@dev1-10:/home/demi/netol_do/devops-netology# cat tt1.txt | grep ticket > test_3
 	root@dev1-10:/home/demi/netol_do/devops-netology# cat test_3
 	trouble ticket 1
 	root@dev1-10:/home/demi/netol_do/devops-netology# 
+
 > ...
 
- root@dev1-10:/home/demi/netol_do/devops-netology# tty
- /dev/pts/0
- root@dev1-10:/home/demi/netol_do/devops-netology# touch test
- root@dev1-10:/home/demi/netol_do/devops-netology# echo cwd > test
- root@dev1-10:/home/demi/netol_do/devops-netology# read a < test | grep -c $a README-3.2-WORKING_WITHIN_TERMINAL-2.md > /dev/pts/1
+	root@dev1-10:/home/demi/netol_do/devops-netology# tty
+	/dev/pts/0
+	root@dev1-10:/home/demi/netol_do/devops-netology# touch test
+	root@dev1-10:/home/demi/netol_do/devops-netology# echo cwd > test
+	root@dev1-10:/home/demi/netol_do/devops-netology# read a < test | grep -c $a README-3.2-WORKING_WITHIN_TERMINAL-2.md > /dev/pts/1
 
 
 6. Получится ли вывести находясь в графическом режиме данные из PTY в какой-либо из эмуляторов TTY? Сможете ли вы наблюдать выводимые данные?
 
 > Да. Находясь в приложении Terminal, можно выполнить:
 
- root@dev1-10:/home/demi/netol_do/devops-netology# echo 123 > /dev/pts/0
- root@dev1-10:/home/demi/netol_do/devops-netology# tty
- /dev/pts/3
+	root@dev1-10:/home/demi/netol_do/devops-netology# echo 123 > /dev/pts/0
+	root@dev1-10:/home/demi/netol_do/devops-netology# tty
+	/dev/pts/3
 
 > В эммулированном tty 0 увидим вывод:
 
- root@dev1-10:/home/demi/netol_do/devops-netology# tty
- /dev/pts/0
- root@dev1-10:/home/demi/netol_do/devops-netology# 123
- 
- root@dev1-10:/home/demi/netol_do/devops-netology# 
+	root@dev1-10:/home/demi/netol_do/devops-netology# tty
+	/dev/pts/0
+	root@dev1-10:/home/demi/netol_do/devops-netology# 123
+
+	root@dev1-10:/home/demi/netol_do/devops-netology# 
 
 
 
@@ -109,9 +107,9 @@
 
 > Ниже приведет к перенаправлению 5 в stdout: 
 
- root@dev1-10:/home/demi/netol_do/devops-netology# echo netology > /proc/$$/fd/5
- netology
- root@dev1-10:/home/demi/netol_do/devops-netology# 
+	root@dev1-10:/home/demi/netol_do/devops-netology# echo netology > /proc/$$/fd/5
+	netology
+	root@dev1-10:/home/demi/netol_do/devops-netology# 
 
 > И при попытке записи в /proc/$$/fd/5 в терминал получим 'netology'
 

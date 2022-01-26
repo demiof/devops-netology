@@ -17,7 +17,7 @@
     ```
     Используя `strace` выясните, где находится база данных `file` на основании которой она делает свои догадки.
 
-> Похоже тут ```bash /etc/ld.so.preload``` так как все три раза последним сисвызовом access до read был этот файл:
+> Похоже тут ```/etc/ld.so.preload``` так как все три раза последним сисвызовом access до read был этот файл:
 
 	root@dev1-10:~# strace -o /home/demi/netol_do/devops-netology/strace.olg file /dev/tty
 	/dev/tty: character special (5/0)

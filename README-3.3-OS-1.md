@@ -17,7 +17,7 @@
     ```
     Используя `strace` выясните, где находится база данных `file` на основании которой она делает свои догадки.
 
-> Похоже тут ```openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3``` так как все три раза последним сисвызовом mamp до вывода результата был этот файл:
+> Похоже тут ```openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3``` так как все три раза последним сисвызовом mmap до вывода результата был этот файл:
 
 
 	root@dev1-10:/home/demi/netol_do/devops-netology# grep -B 10 "+++ exited with 0 +++" strace.olg 
@@ -53,8 +53,10 @@
 
 3. Предположим, приложение пишет лог в текстовый файл. Этот файл оказался удален (deleted в lsof), однако возможности сигналом сказать приложению переоткрыть файлы или просто перезапустить приложение – нет. Так как приложение продолжает писать в удаленный файл, место на диске постепенно заканчивается. Основываясь на знаниях о перенаправлении потоков предложите способ обнуления открытого удаленного файла (чтобы освободить место на файловой системе).
 
+```bash
 	lsof -p $pid
 	for i in `lsof -p $pid | grep -P '[0-9]{1,3}[a-z]{1}[ \t]' | awk '{print $4}' | sed 's/.$//'`; do `: >  /proc/$pid/fd/$i`; done
+```
 
 > Найдем все открытые фалй процесса с pid $pid, полчим их дескрипторы и запишем с пом. конструкции-перенаправления : > туда, освободив таким образом области памяти.
 > Возможно, это нужно будет делать перодически, если дескриптооры будут наполнятся и далее процессом. 
@@ -66,14 +68,15 @@
 > Нет, если они не осиротевшие, т.е. они просто Zombie, доч. процесс для которого не выполнен wait() родителем, а родитель с pid 1 еще не выполнил усыновление. Осиротевший или Orphan становится, например, во время оборванного удаленного сеанса, но осиротевший успел зааллокейтить ресурсов. С зомби таких проблем нет. Сиротский процесс - это пользовательский процесс, родительский процесс которого имеет init (идентификатор процесса - 1).
 > Если с зомби понятно как находить (по Z в колонки STAT bsd-ого формата вывода ps, то orphan найти потруднее: кто-то предлагает отфильтровывть все процессы с ppid = 1 и пользователем != root, дополнительно можно фильтровать по CMD подстроке процесса, например:
 
-
+```bash
 	ps -elf | head -1; ps -elf | awk '{if ($5 == 1 && $3 != "root" && match($15,'winexe-1.00')) {print $0}}' | head
-
+```
 
 > Так можно получить список pid:
 
+```bash
 	ps -elf | head -1; ps -elf | awk '{if ($5 == 1 && $3 != "root") {print $0}}' | head
-
+```
 
 
 
@@ -85,30 +88,33 @@
     На какие файлы вы увидели вызовы группы `open` за первую секунду работы утилиты? Воспользуйтесь пакетом `bpfcc-tools` для Ubuntu 20.04. Дополнительные [сведения по установке](https://github.com/iovisor/bcc/blob/master/INSTALL.md).
 
 
-
+```bash
 	root@dev1-10:~# opensnoop-bpfcc -ed 1
 	PID    COMM               FD ERR FLAGS    PATH
 	2340   watchdog            4   0 00000000 /proc/uptime
 	2340   watchdog            4   0 00000000 /proc/uptime
+```
 
 6. Какой системный вызов использует `uname -a`? Приведите цитату из man по этому системному вызову, где описывается альтернативное местоположение в `/proc`, где можно узнать версию ядра и релиз ОС.
 
-
+```bash
 	root@dev1-10:/home/demi/netol_do/devops-netology# strace --trace='uname' uname -a
 	uname({sysname="Linux", nodename="dev1-10", ...}) = 0
 	Linux dev1-10 5.10.0-9-amd64 #1 SMP Debian 5.10.70-1 (2021-09-30) x86_64 GNU/Linux
 	+++ exited with 0 +++
 	root@dev1-10:/home/demi/netol_do/devops-netology# 
 	[0] 1:bash*                                                                                                                                "dev1-10" 19:20 26-Jan-22
+```
 
 > Использует одноименный вызов uname
 
+```bash
 	NOTES       This  is  a  system call, and the operating system presumably knows its name, release and version.  It also knows what hardware it runs on.  So, four of       the fields of the struct are meaningful.  On the other hand, the field nodename is meaningless: it gives the name of the present machine in  some  unde‐       fined  network,  but  typically  machines  are  in  more than one network and have several names.  Moreover, the kernel has no way of knowing about such       things, so it has to be told what to answer here.  The same holds for the additional domainname field.       To this end, Linux uses the system calls sethostname(2) and setdomainname(2).  Note that there is no  standard  that  says  that  the  hostname  set  by       sethostname(2)  is the same string as the nodename field of the struct returned by uname() (indeed, some systems allow a 256-byte hostname and an 8-byte       nodename), but this is true on Linux.  The same holds for setdomainname(2) and the domainname field.
 	       The length of the fields in the struct varies.  Some operating systems or libraries use a hardcoded 9 or 33 or 65 or 257.  Other systems use SYS_NMLN or       _SYS_NMLN or UTSLEN or _UTSNAME_LENGTH.  Clearly, it is a bad idea to use any of these constants; just use sizeof(...).  Often 257 is chosen in order to       have room for an internet hostname.
 	       Part of the utsname information is also accessible via /proc/sys/kernel/{ostype, hostname, osrelease, version, domainname}.
+```
 
-
-
+```bash
 	root@dev1-10:/home/demi/netol_do/devops-netology# cat /proc/sys/kernel/ostype 
 	Linux
 	root@dev1-10:/home/demi/netol_do/devops-netology# cat /proc/sys/kernel/hostname
@@ -129,16 +135,19 @@
 	HOME_URL="https://www.debian.org/"
 	SUPPORT_URL="https://www.debian.org/support"
 	BUG_REPORT_URL="https://bugs.debian.org/"
-
+```
 
 
 
 7. Чем отличается последовательность команд через `;` и через `&&` в bash? Например:
+
     ```bash
     root@netology1:~# test -d /tmp/some_dir; echo Hi
     Hi
+	```
 > В любом случае echo выведет строку 'Hi'.
 
+	```bash
     root@netology1:~# test -d /tmp/some_dir && echo Hi
     root@netology1:~#
     ```
@@ -159,57 +168,67 @@
 
 > Несколько проверок, весь список пайплан выполнился, вывелись тек. настройки в нек. формате (-x) и stderr сообщение:  
 
+```bash
 	root@dev1-10:~# if (set -euxo pipefail && true | ls \tmp\non_exist | true ); then echo "pipline is true!"; else echo "pipline is false \;("; fi;
 	+ true
 	+ ls tmpnon_exist
 	+ true
 	ls: cannot access 'tmpnon_exist': No such file or directory
 	pipline is false \;(
-
+```
 	
 > Тоже, и немедленного выхода из подоболочки не произошло:
 
+```bash
 	root@dev1-10:~# if (set -xo pipefail && true | ls \tmp\non_exist | true ); then echo "pipline is true!"; else echo "pipline is false \;("; fi;
 	+ true
 	+ ls tmpnon_exist
 	+ true
 	ls: cannot access 'tmpnon_exist': No such file or directory
 	pipline is false \;(
+```
 
 > Тоже поведение даже, если последним выражением в пайплайн возвр. >0 :
 
+```bash
 	root@dev1-10:~# if (set -xo pipefail && true | ls \tmp\non_exist | false ); then echo "pipline is true!"; else echo "pipline is false \;("; fi;
 	+ true
 	+ ls tmpnon_exist
 	+ false
 	ls: cannot access 'tmpnon_exist': No such file or directory
 	pipline is false \;(
+```
 
 > Тоже, не смотря на присутствие -e немедл. выхода, но с присутствием -x -o его не произошло: 
 
+```bash
 	root@dev1-10:~# if (set -exo pipefail && true | ls \tmp\non_exist | false ); then echo "pipline is true!"; else echo "pipline is false \;("; fi;
 	+ true
 	+ ls tmpnon_exist
 	+ false
 	ls: cannot access 'tmpnon_exist': No such file or directory
 	pipline is false \;(
+```
 
 > Тоже, даже если добавился -u :
 
+```bash
 	root@dev1-10:~# if (set -euxo pipefail && true | ls \tmp\non_exist | false ); then echo "pipline is true!"; else echo "pipline is false \;("; fi;
 	+ true
 	+ ls tmpnon_exist
 	+ false
 	ls: cannot access 'tmpnon_exist': No such file or directory
 	pipline is false \;(
+```
 
 > А вот здесь, произошол выход из подоболочки (но не оболочки!), видимо, потому что, только -e задан:
 
+```bash
 	root@dev1-10:~# if (set -e pipefail && true | ls \tmp\non_exist | false ); then echo "pipline is true!"; else echo "pipline is false \;("; fi;
 	ls: cannot access 'tmpnon_exist': No such file or directory
 	pipline is false \;(
 	root@dev1-10:~# 
-
+```
 
 > Резюмируем: хорошо его использовать в сценариях, т.к. он покажет нам всех возвращаемые значения, настройки ив stdin и в stderr, для пайплан последовательности подоболочки! Хорошо для целей понимания условия, оператора условия в конкретном примере.
 
@@ -225,6 +244,7 @@
 
 > Больше всего процессов со статусом Sl т.е. многопоточных (l) спящих (S) с возможностью прерывания (interruptable): 
 
+```bash
 	root@dev1-10:~# ps ao stat | sort | grep Ss | wc -l
 	9
 	root@dev1-10:~# ps ao stat | sort | grep Sl+ | wc -l
@@ -237,7 +257,7 @@
 	15
 	root@dev1-10:~# ps ao stat | sort | grep R+ | wc -l
 	1
-
+```
 
 
  ```bash

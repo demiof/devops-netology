@@ -1,63 +1,63 @@
-execve("/usr/bin/file", ["file", "/bin/bash"], 0x7ffdbed5e2d8 /* 26 vars */) = 0
-brk(NULL)                               = 0x5555fb30e000
+execve("/usr/bin/file", ["file", "/bin/bash"], 0x7ffe87e250a8 /* 26 vars */) = 0
+brk(NULL)                               = 0x557ac095e000
 access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
 fstat(3, {st_mode=S_IFREG|0644, st_size=92533, ...}) = 0
-mmap(NULL, 92533, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f2349760000
+mmap(NULL, 92533, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fb328ba3000
 close(3)                                = 0
 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libmagic.so.1", O_RDONLY|O_CLOEXEC) = 3
 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0PG\0\0\0\0\0\0"..., 832) = 832
 fstat(3, {st_mode=S_IFREG|0644, st_size=170216, ...}) = 0
-mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f234975e000
-mmap(NULL, 173048, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f2349733000
-mmap(0x7f2349737000, 114688, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x4000) = 0x7f2349737000
-mmap(0x7f2349753000, 32768, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x20000) = 0x7f2349753000
-mmap(0x7f234975b000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x27000) = 0x7f234975b000
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fb328ba1000
+mmap(NULL, 173048, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fb328b76000
+mmap(0x7fb328b7a000, 114688, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x4000) = 0x7fb328b7a000
+mmap(0x7fb328b96000, 32768, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x20000) = 0x7fb328b96000
+mmap(0x7fb328b9e000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x27000) = 0x7fb328b9e000
 close(3)                                = 0
 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
 read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0@n\2\0\0\0\0\0"..., 832) = 832
 fstat(3, {st_mode=S_IFREG|0755, st_size=1839792, ...}) = 0
-mmap(NULL, 1852680, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f234956e000
-mprotect(0x7f2349593000, 1662976, PROT_NONE) = 0
-mmap(0x7f2349593000, 1355776, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x25000) = 0x7f2349593000
-mmap(0x7f23496de000, 303104, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x170000) = 0x7f23496de000
-mmap(0x7f2349729000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1ba000) = 0x7f2349729000
-mmap(0x7f234972f000, 13576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f234972f000
+mmap(NULL, 1852680, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fb3289b1000
+mprotect(0x7fb3289d6000, 1662976, PROT_NONE) = 0
+mmap(0x7fb3289d6000, 1355776, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x25000) = 0x7fb3289d6000
+mmap(0x7fb328b21000, 303104, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x170000) = 0x7fb328b21000
+mmap(0x7fb328b6c000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1ba000) = 0x7fb328b6c000
+mmap(0x7fb328b72000, 13576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7fb328b72000
 close(3)                                = 0
 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libbz2.so.1.0", O_RDONLY|O_CLOEXEC) = 3
 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\260\"\0\0\0\0\0\0"..., 832) = 832
 fstat(3, {st_mode=S_IFREG|0644, st_size=74688, ...}) = 0
-mmap(NULL, 76840, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f234955b000
-mmap(0x7f234955d000, 53248, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x7f234955d000
-mmap(0x7f234956a000, 8192, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xf000) = 0x7f234956a000
-mmap(0x7f234956c000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x10000) = 0x7f234956c000
+mmap(NULL, 76840, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fb32899e000
+mmap(0x7fb3289a0000, 53248, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x7fb3289a0000
+mmap(0x7fb3289ad000, 8192, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xf000) = 0x7fb3289ad000
+mmap(0x7fb3289af000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x10000) = 0x7fb3289af000
 close(3)                                = 0
 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libz.so.1", O_RDONLY|O_CLOEXEC) = 3
 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0203\0\0\0\0\0\0"..., 832) = 832
 fstat(3, {st_mode=S_IFREG|0644, st_size=113088, ...}) = 0
-mmap(NULL, 115088, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f234953e000
-mprotect(0x7f2349541000, 98304, PROT_NONE) = 0
-mmap(0x7f2349541000, 69632, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x7f2349541000
-mmap(0x7f2349552000, 24576, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x14000) = 0x7f2349552000
-mmap(0x7f2349559000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1a000) = 0x7f2349559000
+mmap(NULL, 115088, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fb328981000
+mprotect(0x7fb328984000, 98304, PROT_NONE) = 0
+mmap(0x7fb328984000, 69632, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x7fb328984000
+mmap(0x7fb328995000, 24576, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x14000) = 0x7fb328995000
+mmap(0x7fb32899c000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1a000) = 0x7fb32899c000
 close(3)                                = 0
-mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f234953c000
-arch_prctl(ARCH_SET_FS, 0x7f234953cb80) = 0
-mprotect(0x7f2349729000, 12288, PROT_READ) = 0
-mprotect(0x7f2349559000, 4096, PROT_READ) = 0
-mprotect(0x7f234956c000, 4096, PROT_READ) = 0
-mprotect(0x7f234975b000, 8192, PROT_READ) = 0
-mprotect(0x5555fb18f000, 4096, PROT_READ) = 0
-mprotect(0x7f23497a1000, 4096, PROT_READ) = 0
-munmap(0x7f2349760000, 92533)           = 0
-brk(NULL)                               = 0x5555fb30e000
-brk(0x5555fb32f000)                     = 0x5555fb32f000
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fb32897f000
+arch_prctl(ARCH_SET_FS, 0x7fb32897fb80) = 0
+mprotect(0x7fb328b6c000, 12288, PROT_READ) = 0
+mprotect(0x7fb32899c000, 4096, PROT_READ) = 0
+mprotect(0x7fb3289af000, 4096, PROT_READ) = 0
+mprotect(0x7fb328b9e000, 8192, PROT_READ) = 0
+mprotect(0x557abf9d5000, 4096, PROT_READ) = 0
+mprotect(0x7fb328be4000, 4096, PROT_READ) = 0
+munmap(0x7fb328ba3000, 92533)           = 0
+brk(NULL)                               = 0x557ac095e000
+brk(0x557ac097f000)                     = 0x557ac097f000
 openat(AT_FDCWD, "/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3
 fstat(3, {st_mode=S_IFREG|0644, st_size=3041456, ...}) = 0
-mmap(NULL, 3041456, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f2349255000
+mmap(NULL, 3041456, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fb328698000
 close(3)                                = 0
-stat("/root/.magic.mgc", 0x7ffeed0cc9f0) = -1 ENOENT (No such file or directory)
-stat("/root/.magic", 0x7ffeed0cc9f0)    = -1 ENOENT (No such file or directory)
+stat("/root/.magic.mgc", 0x7ffca19bd040) = -1 ENOENT (No such file or directory)
+stat("/root/.magic", 0x7ffca19bd040)    = -1 ENOENT (No such file or directory)
 openat(AT_FDCWD, "/etc/magic.mgc", O_RDONLY) = -1 ENOENT (No such file or directory)
 stat("/etc/magic", {st_mode=S_IFREG|0644, st_size=111, ...}) = 0
 openat(AT_FDCWD, "/etc/magic", O_RDONLY) = 3
@@ -67,23 +67,23 @@ read(3, "", 4096)                       = 0
 close(3)                                = 0
 openat(AT_FDCWD, "/usr/share/misc/magic.mgc", O_RDONLY) = 3
 fstat(3, {st_mode=S_IFREG|0644, st_size=6645048, ...}) = 0
-mmap(NULL, 6645048, PROT_READ|PROT_WRITE, MAP_PRIVATE, 3, 0) = 0x7f2348bfe000
+mmap(NULL, 6645048, PROT_READ|PROT_WRITE, MAP_PRIVATE, 3, 0) = 0x7fb328041000
 close(3)                                = 0
-mprotect(0x7f2348bfe000, 6645048, PROT_READ) = 0
+mprotect(0x7fb328041000, 6645048, PROT_READ) = 0
 openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3
 fstat(3, {st_mode=S_IFREG|0644, st_size=27002, ...}) = 0
-mmap(NULL, 27002, PROT_READ, MAP_SHARED, 3, 0) = 0x7f2349770000
+mmap(NULL, 27002, PROT_READ, MAP_SHARED, 3, 0) = 0x7fb328bb3000
 close(3)                                = 0
 fstat(1, {st_mode=S_IFCHR|0600, st_rdev=makedev(0x88, 0), ...}) = 0
-mmap(NULL, 1052672, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f2348afd000
+mmap(NULL, 1052672, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fb327f40000
 lstat("/bin/bash", {st_mode=S_IFREG|0755, st_size=1234376, ...}) = 0
 openat(AT_FDCWD, "/bin/bash", O_RDONLY|O_NONBLOCK) = 3
 fstat(3, {st_mode=S_IFREG|0755, st_size=1234376, ...}) = 0
 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\200\6\3\0\0\0\0\0"..., 1048576) = 1048576
-mmap(NULL, 8392704, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f23482fc000
-mmap(NULL, 1052672, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f23481fb000
-munmap(0x7f23481fb000, 1052672)         = 0
-munmap(0x7f23482fc000, 8392704)         = 0
+mmap(NULL, 8392704, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fb32773f000
+mmap(NULL, 1052672, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fb32763e000
+munmap(0x7fb32763e000, 1052672)         = 0
+munmap(0x7fb32773f000, 8392704)         = 0
 lseek(3, 0, SEEK_SET)                   = 0
 pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 56, 64) = 56
 pread64(3, "\3\0\0\0\4\0\0\0\250\2\0\0\0\0\0\0\250\2\0\0\0\0\0\0\250\2\0\0\0\0\0\0"..., 56, 120) = 56
@@ -159,9 +159,9 @@ pread64(3, ".bss\0.gnu_debuglink\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 49, 1232494) = 4
 pread64(3, "\373\0\0\0\1\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0D\315\22\0\0\0\0\0"..., 64, 1234248) = 64
 pread64(3, ".gnu_debuglink\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 49, 1232499) = 49
 pread64(3, "\1\0\0\0\3\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0x\315\22\0\0\0\0\0"..., 64, 1234312) = 64
-munmap(0x7f2348afd000, 1052672)         = 0
+munmap(0x7fb327f40000, 1052672)         = 0
 close(3)                                = 0
 write(1, "/bin/bash: ELF 64-bit LSB pie ex"..., 215) = 215
-munmap(0x7f2348bfe000, 6645048)         = 0
+munmap(0x7fb328041000, 6645048)         = 0
 exit_group(0)                           = ?
 +++ exited with 0 +++

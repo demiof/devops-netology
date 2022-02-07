@@ -141,6 +141,69 @@ root@dev1-10:/etc/systemd/system#
 ```
 
 
+> Теперь добьемся, чтобы сервис Prometheus прочитал EnvironmentFile, который создадим с помощью systemd edit prometheus.service. Удобно, т.к. за анс откроют эдитор, закоментят написанное в соотв. юнит файле и предложат указать имя для сохранения в только что специально созданную дерикторию (по названиию сервиса). Сохраним туда так называемый drop-in дополнение следующего содержания:
+
+
+```bash
+root@dev1-10:/etc/systemd/system# systemctl show prometheus.service | grep Envi
+Environment=PROMETHEUS_CFG_OPTS=/root/prometheus-2.33.0.linux-amd64/prometheus.yml
+root@dev1-10:/etc/systemd/system# vim ./prometheus.service
+root@dev1-10:/etc/systemd/system# 
+root@dev1-10:/etc/systemd/system# 
+root@dev1-10:/etc/systemd/system# systemctl daemon-reload 
+root@dev1-10:/etc/systemd/system# systemctl restart prometheus.service 
+root@dev1-10:/etc/systemd/system# systemctl status prometheus.service 
+● prometheus.service - Prometheus-2.33.0.linux-amd64
+     Loaded: loaded (/etc/systemd/system/prometheus.service; enabled; vendor preset: enabled)
+    Drop-In: /etc/systemd/system/prometheus.service.d
+             └─myenv.conf
+     Active: active (running) since Mon 2022-02-07 12:02:49 MSK; 3s ago
+   Main PID: 885335 (prometheus)
+      Tasks: 13 (limit: 4657)
+     Memory: 31.7M
+        CPU: 586ms
+     CGroup: /system.slice/prometheus.service
+             └─885335 /root/prometheus-2.33.0.linux-amd64/prometheus --config.file=/root/prometheus-2.33.0.linux-amd64/prometheus.yml
+
+Feb 07 12:02:50 dev1-10 prometheus[885335]: ts=2022-02-07T09:02:50.095Z caller=head.go:604 level=info component=tsdb msg="WAL segment loaded" segment=55 maxSegment>Feb 07 12:02:50 dev1-10 prometheus[885335]: ts=2022-02-07T09:02:50.125Z caller=head.go:604 level=info component=tsdb msg="WAL segment loaded" segment=56 maxSegment>Feb 07 12:02:50 dev1-10 prometheus[885335]: ts=2022-02-07T09:02:50.126Z caller=head.go:604 level=info component=tsdb msg="WAL segment loaded" segment=57 maxSegment>Feb 07 12:02:50 dev1-10 prometheus[885335]: ts=2022-02-07T09:02:50.126Z caller=head.go:604 level=info component=tsdb msg="WAL segment loaded" segment=58 maxSegment>Feb 07 12:02:50 dev1-10 prometheus[885335]: ts=2022-02-07T09:02:50.127Z caller=head.go:610 level=info component=tsdb msg="WAL replay completed" checkpoint_replay_d>Feb 07 12:02:50 dev1-10 prometheus[885335]: ts=2022-02-07T09:02:50.129Z caller=main.go:944 level=info fs_type=EXT4_SUPER_MAGIC
+Feb 07 12:02:50 dev1-10 prometheus[885335]: ts=2022-02-07T09:02:50.129Z caller=main.go:947 level=info msg="TSDB started"
+Feb 07 12:02:50 dev1-10 prometheus[885335]: ts=2022-02-07T09:02:50.129Z caller=main.go:1128 level=info msg="Loading configuration file" filename=/root/prometheus-2>Feb 07 12:02:50 dev1-10 prometheus[885335]: ts=2022-02-07T09:02:50.158Z caller=main.go:1165 level=info msg="Completed loading of configuration file" filename=/root>Feb 07 12:02:50 dev1-10 prometheus[885335]: ts=2022-02-07T09:02:50.158Z caller=main.go:896 level=info msg="Server is ready to receive web requests."
+
+root@dev1-10:/etc/systemd/system# systemctl show prometheus.service | grep Envi
+Environment=PROMETHEUS_CFG_OPTS=/root/prometheus-2.33.0.linux-amd64/prometheus.yml
+root@dev1-10:/etc/systemd/system# cat ./prometheus.service.d/myenv.conf 
+### Editing /etc/systemd/system/prometheus.service.d/override.conf
+### Anything between here and the comment below will become the new contents of the file
+
+
+[Service]
+Environment="PROMETHEUS_CFG_OPTS=/root/prometheus-2.33.0.linux-amd64/prometheus.yml"
+
+### Lines below this comment will be discarded
+
+### /etc/systemd/system/prometheus.service
+# [Unit]
+# Description=Prometheus-2.33.0.linux-amd64
+# After=network-online.target mysqld.service apache2.service memcached.service node_exporter.service
+# Requires=network-online.target mysqld.service apache2.service memcached.service node_exporter.service
+# 
+# 
+# [Install]
+# WantedBy=multi-user.target
+# 
+# 
+# [Service]
+# ExecStart=/root/prometheus-2.33.0.linux-amd64/prometheus --config.file=${PROMETHEUS_CFG_OPTS}
+root@dev1-10:/etc/systemd/system# 
+
+
+
+
+```
+
+
+
+
 2. Ознакомьтесь с опциями node_exporter и выводом `/metrics` по-умолчанию. Приведите несколько опций, которые вы бы выбрали для базового мониторинга хоста по CPU, памяти, диску и сети.
 
 

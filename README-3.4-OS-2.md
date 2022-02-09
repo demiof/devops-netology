@@ -141,7 +141,7 @@ root@dev1-10:/etc/systemd/system#
 ```
 
 
-> Теперь добьемся, чтобы сервис Prometheus прочитал EnvironmentFile, который создадим с помощью systemd edit prometheus.service. Удобно, т.к. за анс откроют эдитор, закоментят написанное в соотв. юнит файле и предложат указать имя для сохранения в только что специально созданную дерикторию (по названиию сервиса). Сохраним туда так называемый drop-in дополнение следующего содержания:
+> Теперь добьемся, чтобы сервис Prometheus прочитал Environment, который создадим с помощью systemd edit prometheus.service. Удобно, т.к. за анс откроют эдитор, закоментят написанное в соотв. юнит файле и предложат указать имя для сохранения в только что специально созданную дерикторию (по названиию сервиса). Сохраним туда так называемый drop-in дополнение следующего содержания:
 
 
 ```bash
@@ -201,6 +201,52 @@ root@dev1-10:/etc/systemd/system#
 
 ```
 
+
+
+
+
+> И наконец попробуем заставить прочитать переменную PROMETHEUS_CFG_OPTS из раздела [Service] файла EnvironmentFile находящегося в /etc/default/prometheus:
+
+
+```bash
+
+root@dev1-10:/etc/systemd/system# sctl status prometheus.service
+● prometheus.service - Prometheus-2.33.0.linux-amd64
+     Loaded: loaded (/etc/systemd/system/prometheus.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2022-02-09 16:56:10 MSK; 5s ago
+   Main PID: 1354395 (prometheus)
+      Tasks: 13 (limit: 4657)
+     Memory: 32.7M
+        CPU: 548ms
+     CGroup: /system.slice/prometheus.service
+             └─1354395 /root/prometheus-2.33.0.linux-amd64/prometheus --config.file=/root/prometheus-2.33.0.linux-amd64/prometheus.yml
+
+Feb 09 16:56:11 dev1-10 prometheus[1354395]: ts=2022-02-09T13:56:11.629Z caller=head.go:604 level=info component=tsdb msg="WAL segment loaded" segment=80 maxSegmen>Feb 09 16:56:11 dev1-10 prometheus[1354395]: ts=2022-02-09T13:56:11.664Z caller=head.go:604 level=info component=tsdb msg="WAL segment loaded" segment=81 maxSegmen>Feb 09 16:56:11 dev1-10 prometheus[1354395]: ts=2022-02-09T13:56:11.693Z caller=head.go:604 level=info component=tsdb msg="WAL segment loaded" segment=82 maxSegmen>Feb 09 16:56:11 dev1-10 prometheus[1354395]: ts=2022-02-09T13:56:11.694Z caller=head.go:604 level=info component=tsdb msg="WAL segment loaded" segment=83 maxSegmen>Feb 09 16:56:11 dev1-10 prometheus[1354395]: ts=2022-02-09T13:56:11.694Z caller=head.go:610 level=info component=tsdb msg="WAL replay completed" checkpoint_replay_>Feb 09 16:56:11 dev1-10 prometheus[1354395]: ts=2022-02-09T13:56:11.697Z caller=main.go:944 level=info fs_type=EXT4_SUPER_MAGIC
+Feb 09 16:56:11 dev1-10 prometheus[1354395]: ts=2022-02-09T13:56:11.697Z caller=main.go:947 level=info msg="TSDB started"
+Feb 09 16:56:11 dev1-10 prometheus[1354395]: ts=2022-02-09T13:56:11.698Z caller=main.go:1128 level=info msg="Loading configuration file" filename=/root/prometheus->Feb 09 16:56:11 dev1-10 prometheus[1354395]: ts=2022-02-09T13:56:11.705Z caller=main.go:1165 level=info msg="Completed loading of configuration file" filename=/roo>Feb 09 16:56:11 dev1-10 prometheus[1354395]: ts=2022-02-09T13:56:11.705Z caller=main.go:896 level=info msg="Server is ready to receive web requests."
+root@dev1-10:/etc/systemd/system# vim prometheus.service 
+
+root@dev1-10:/etc/systemd/system# cat /etc/default/prometheus 
+PROMETHEUS_CFG_OPTS="/root/prometheus-2.33.0.linux-amd64/prometheus.yml"
+
+root@dev1-10:/etc/systemd/system# cat prometheus.service 
+[Unit]
+Description=Prometheus-2.33.0.linux-amd64
+After=network-online.target mysqld.service apache2.service memcached.service node_exporter.service
+Requires=network-online.target mysqld.service apache2.service memcached.service node_exporter.service
+
+
+[Install]
+WantedBy=multi-user.target
+
+
+[Service]
+ExecStart=/root/prometheus-2.33.0.linux-amd64/prometheus --config.file=${PROMETHEUS_CFG_OPTS}
+EnvironmentFile=/etc/default/prometheus
+root@dev1-10:/etc/systemd/system# 
+
+
+```
 
 
 

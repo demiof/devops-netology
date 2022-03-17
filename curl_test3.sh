@@ -2,7 +2,7 @@
 log="curl3.log"
 log_err="curl3_err.log"
 declare -i n=5
-declare -a a=("173.194.222.113" "87.250.250.242")
+declare -a a=("173.194.222.113" "192.168.0.1" "87.250.250.242")
 
 if [ -f $log ] 
 	then

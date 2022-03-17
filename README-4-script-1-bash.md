@@ -317,4 +317,34 @@ no changes added to commit (use "git add" and/or "git commit -a")
 root@dev1-10:/home/demi/netol_do/devops-netology# 
 
 
+
+
+root@dev1-10:/home/demi/netol_do/devops-netology# git commit -m 'BASH 4.1'
+1111111111111111111111
+Good Commit 
+[main 229f774] BASH 4.1
+ 4 files changed, 180 insertions(+), 47 deletions(-)
+ rewrite curl3.log (73%)
+
+
+
+
+
+
 ```
+
+>Видимо проверил не лог, а [main 229f774] ...  
+
+
+```bash
+
+root@dev1-10:/home/demi/netol_do/devops-netology# git commit -m 'BASH 4.1 123456789012345678901234567890123'
+1111111111111111111111
+Bad commit BASH 4.1 123456789012345678901234567890123
+
+Warning! Commit _must_ include square brackets /[ and /] a the beg. & end of Commit msg! Commit msg _must_ be not more than 30 symbols!
+commit-msg hook faile (add --no-verify to bypass)
+root@dev1-10:/home/demi/netol_do/devops-netology# 
+```
+
+>А вот на длину более 30 символов ругнулся ...

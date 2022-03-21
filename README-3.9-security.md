@@ -59,6 +59,46 @@ root@dev1-10:~#
 
 
 ```bash
+
+
+
+
+demi@dev1-10:~/.ssh$ ssh-keygen -t rsa -O bits=2048 -f ./demi_id_rsa
+Generating public/private rsa key pair.
+./demi_id_rsa already exists.
+Overwrite (y/n)? y
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in ./demi_id_rsa
+Your public key has been saved in ./demi_id_rsa.pub
+The key fingerprint is:
+SHA256:BHEbi+3AmuC+q7TpQ+VlfzordnsDKNJM7Ktwv1vOx6k demi@dev1-10
+The key's randomart image is:
++---[RSA 3072]----+
+|      o.o        |
+|     . = +       |
+|  o   + =        |
+| . = = +         |
+|  O = o S        |
+| + * . o .       |
+|o.+ o ..+.       |
+|ooo+ * ++o       |
+|o*=.=oE== .      |
++----[SHA256]-----+
+
+
+
+demi@dev1-10:~/.ssh$ ssh-copy-id 192.168.1.33
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/home/demi/.ssh/id_rsa.pub"
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+
+/usr/bin/ssh-copy-id: WARNING: All keys were skipped because they already exist on the remote system.
+                (if you think this is a mistake, you may want to use -f option)
+
+demi@dev1-10:~/.ssh$ 
+
+
+
 demi@dev1-10:~$ ssh 192.168.1.33
 
 Last login: Tue Mar  8 12:30:45 2022 from 192.168.1.117
@@ -69,6 +109,14 @@ demi@odines1:~$
 6. Переименуйте файлы ключей из задания 5. Настройте файл конфигурации SSH клиента, так чтобы вход на удаленный сервер осуществлялся по имени сервера.
 
 ```bash
+
+demi@dev1-10:~# cat /home/demi/.ssh/config
+Host odines1
+        Hostname 192.168.1.33
+        IdentityFile ~/.ssh/demi_id_rsa
+        User demi
+Linux dev1-10 5.10.0-9-amd64 #1 SMP Debian 5.10.70-1 (2021-09-30) x86_64
+
 demi@dev1-10:~$ ssh odines1
 Welcome to Ubuntu 18.04.5 LTS (GNU/Linux 4.15.0-135-generic x86_64)
 

@@ -6,8 +6,14 @@ import subprocess as sp
 
 
 # Модель разработки - Магистральная
-
+login_name='demiof'
 master_branch_name = 'main'
+new_branch_name = 'branch_api'
+PAT_name = os.environ['PAT_git_bash']
+
+
+
+
 
 # Определяем имя репозитория, проверяем в его ли папке и сущ-е .git
 
@@ -50,11 +56,56 @@ else:
 #перенос изменений с сервера в локальный репозиторий
 
 bash_command = ["git pull "+remote_name+" "+master_branch_name]
-result_os = os.popen(' && '.join(bash_command)).read()
+output = sp.getoutput(bash_command)
+print(output)
+#result_os = os.popen(' && '.join(bash_command)).read()
+
+
+
 
 
 
 #создать новую ветку
+
+
+    #получить SHA тек. объекта
+bash_cmd_sha="curl -s -H 'Authorization: token "+PAT_name+"' https://api.github.com/repos/"+login_name+"/"+repo_name+"/git/refs/heads/"+master_branch_name+" | jq -r '.object.sha'"
+
+output_sha = sp.getoutput(bash_cmd_sha)
+
+print(output_sha)
+
+print(bash_cmd_sha)
+
+
+bash_cmd_new_branch="curl -s -X POST -H 'Authorization: token "+PAT_name+"' \
+https://api.github.com/repos/"+login_name+"/"+repo_name+"/git/refs \
+-d '{\"ref\": \"refs/heads/"+new_branch_name+"\", \
+\"sha\": \""+output_sha+"\"}'"
+
+
+output_new_branch = sp.getoutput(bash_cmd_new_branch)
+
+#curl -X POST -H "Authorization: token $TOKEN" \
+#-d  "{\"ref\": \"refs/heads/$New_branch_name\",\"sha\": \"$SHA\"}" \ "https://api.github.com/repos/<REPO>/git/refs"
+
+
+#print(bash_cmd_new_branch)
+
+#print(output_new_branch)
+
+
+
+
+
+
+
+ 
+
+
+
+
+
 #закомитить в ней изменения
 #создать PR для вливания текущей ветки в main (с собщением из первого параметра скрипта)
 #замерджить с main

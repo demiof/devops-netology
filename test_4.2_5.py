@@ -12,7 +12,7 @@ new_branch_name = 'branch_api'
 PAT_name = os.environ['PAT_git_bash']
 auto_commit_message = 'autocommit'
 
-github_base_url='https://api.github.com/'
+github_base_url='https://api.github.com'
 
 
 # Определяем имя репозитория, проверяем в его ли папке и сущ-е .git

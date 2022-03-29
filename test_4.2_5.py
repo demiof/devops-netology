@@ -12,7 +12,7 @@ new_branch_name = 'branch_api'
 PAT_name = os.environ['PAT_git_bash']
 auto_commit_message = 'autocommit'
 
-
+github_base_url='https://api.github.com/'
 
 
 # Определяем имя репозитория, проверяем в его ли папке и сущ-е .git
@@ -92,7 +92,7 @@ print(output)
 #print(output_new_branch)
 
 
-bash_command = ["git checkout -b  "+remote_name+" "+new_branch_name]
+bash_command = "git checkout -b  "+new_branch_name+"--track "+remote_name+"/"+new_branch_name
 output = sp.getoutput(bash_command)
 print(output)
 #
@@ -100,11 +100,11 @@ print(output)
 
 #закомитить в ней изменения
 
-bash_command = ["git add *"]
+bash_command = "git add *"
 output = sp.getoutput(bash_command)
 print(output)
 #
-bash_command = ["git commit -m "+auto_commit_message]
+bash_command = "git commit -m "+auto_commit_message
 output = sp.getoutput(bash_command)
 print(output)
 #
@@ -122,11 +122,14 @@ print(output)
 #print(bash_cmd_sha)
 
 
-
-bash_cmd_new_pr="curl -s -X POST -H 'Authorization: token "+PAT_name+"' \
-https://api.github.com/repos/"+login_name+"/"+repo_name+"/pulls \
+bash_cmd_new_pr=["curl -i -u "+login_name+":"+PAT_name+" "+github_base_url+"/users/"+login_name,
+        "curl -s -X POST -H 'Accept: application/vnd.github.v3+json' "+github_base_url+"/repos/"+login_name+"/"+repo_name+"/pulls \
 -d '{\"head\": \""+new_branch_name+"\", \
-\"base\": \""+master_branch_name+"\"}'"
+\"base\": \""+master_branch_name+"\"}'"]
+#        "curl -s -X POST -H 'Authorization: token "+PAT_name+"' "+github_base_url+"/repos/"+login_name+"/"+repo_name+"/pulls \
+#-d '{\"head\": \""+new_branch_name+"\", \
+#\"base\": \""+master_branch_name+"\"}'"]
+
 
 
 output_new_pr = sp.getoutput(bash_cmd_new_pr)

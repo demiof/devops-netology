@@ -10,7 +10,7 @@ login_name='demiof'
 master_branch_name = 'main'
 new_branch_name = 'branch_api'
 PAT_name = os.environ['PAT_git_bash']
-
+auto_commit_message = 'autocommit'
 
 
 
@@ -60,31 +60,28 @@ output = sp.getoutput(bash_command)
 print(output)
 #result_os = os.popen(' && '.join(bash_command)).read()
 
-
-
-
-
-
 #создать новую ветку
 
 
+
     #получить SHA тек. объекта
-bash_cmd_sha="curl -s -H 'Authorization: token "+PAT_name+"' https://api.github.com/repos/"+login_name+"/"+repo_name+"/git/refs/heads/"+master_branch_name+" | jq -r '.object.sha'"
+#bash_cmd_sha="curl -s -H 'Authorization: token "+PAT_name+"' https://api.github.com/repos/"+login_name+"/"+repo_name+"/git/refs/heads/"+master_branch_name+" | jq -r '.object.sha'"
 
-output_sha = sp.getoutput(bash_cmd_sha)
+#output_sha = sp.getoutput(bash_cmd_sha)
 
-print(output_sha)
+#print(output_sha)
 
-print(bash_cmd_sha)
-
-
-bash_cmd_new_branch="curl -s -X POST -H 'Authorization: token "+PAT_name+"' \
-https://api.github.com/repos/"+login_name+"/"+repo_name+"/git/refs \
--d '{\"ref\": \"refs/heads/"+new_branch_name+"\", \
-\"sha\": \""+output_sha+"\"}'"
+#print(bash_cmd_sha)
 
 
-output_new_branch = sp.getoutput(bash_cmd_new_branch)
+#bash_cmd_new_branch="curl -s -X POST -H 'Authorization: token "+PAT_name+"' \
+#https://api.github.com/repos/"+login_name+"/"+repo_name+"/git/refs \
+#-d '{\"ref\": \"refs/heads/"+new_branch_name+"\", \
+#\"sha\": \""+output_sha+"\"}'"
+
+
+#output_new_branch = sp.getoutput(bash_cmd_new_branch)
+
 
 #curl -X POST -H "Authorization: token $TOKEN" \
 #-d  "{\"ref\": \"refs/heads/$New_branch_name\",\"sha\": \"$SHA\"}" \ "https://api.github.com/repos/<REPO>/git/refs"
@@ -95,19 +92,57 @@ output_new_branch = sp.getoutput(bash_cmd_new_branch)
 #print(output_new_branch)
 
 
-
-
-
-
-
- 
-
-
-
+bash_command = ["git checkout -b  "+remote_name+" "+new_branch_name]
+output = sp.getoutput(bash_command)
+print(output)
+#
 
 
 #закомитить в ней изменения
+
+bash_command = ["git add *"]
+output = sp.getoutput(bash_command)
+print(output)
+#
+bash_command = ["git commit -m "+auto_commit_message]
+output = sp.getoutput(bash_command)
+print(output)
+#
+
+
 #создать PR для вливания текущей ветки в main (с собщением из первого параметра скрипта)
+
+
+    #получить SHA тек. объекта
+#bash_cmd_sha="curl -s -H 'Authorization: token "+PAT_name+"' https://api.github.com/repos/"+login_name+"/"+repo_name+"/git/refs/heads/"+master_branch_name+" | jq -r '.object.sha'"
+
+#output_sha = sp.getoutput(bash_cmd_sha)
+
+#print(output_sha)
+#print(bash_cmd_sha)
+
+
+
+bash_cmd_new_pr="curl -s -X POST -H 'Authorization: token "+PAT_name+"' \
+https://api.github.com/repos/"+login_name+"/"+repo_name+"/pulls \
+-d '{\"head\": \""+new_branch_name+"\", \
+\"base\": \""+master_branch_name+"\"}'"
+
+
+output_new_pr = sp.getoutput(bash_cmd_new_pr)
+print(output_new_pr)
+
+
+
+
+
+
+
 #замерджить с main
+
 #если веток, кроме main более 3 - удалить
+
+
+
+
 

@@ -134,7 +134,7 @@ print(output)
 #-d '{\"head\": \""+new_branch_name+"\", \
 #\"base\": \""+master_branch_name+"\"}'"]
 
-r=requests.get(github_base_url, auth=(login_name,PAT_name))
+r=requests.get(github_base_url+"/users/"+login_name, auth=(login_name,PAT_name))
 #print(r.text)
 r1=requests.post(github_base_url+"/repos/"+login_name+"/"+repo_name+"/pulls", data={"\"head\"":"\""+new_branch_name+"\"","\"base\"":"\""+master_branch_name+"\""})
 print(r1.text)

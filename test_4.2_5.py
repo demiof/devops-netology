@@ -144,7 +144,10 @@ print(r1.json())
 
 
 
-
+bash_command = "git checkout "+master_branch_name#+" --track "+remote_name+"/"+new_branch_name
+output = sp.getoutput(bash_command)
+print(output)
+#
 
 
 

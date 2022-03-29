@@ -92,7 +92,7 @@ print(output)
 #print(output_new_branch)
 
 
-bash_command = "git checkout -b  "+new_branch_name+"--track "+remote_name+"/"+new_branch_name
+bash_command = "git checkout -b  "+new_branch_name+" --track "+remote_name+"/"+new_branch_name
 output = sp.getoutput(bash_command)
 print(output)
 #
@@ -122,7 +122,7 @@ print(output)
 #print(bash_cmd_sha)
 
 
-bash_cmd_new_pr=["curl -i -u "+login_name+":"+PAT_name+" "+github_base_url+"/users/"+login_name,
+bash_cmd_new_pr=["curl -s -i -u "+login_name+":"+PAT_name+" "+github_base_url+"/users/"+login_name,
         "curl -s -X POST -H 'Accept: application/vnd.github.v3+json' "+github_base_url+"/repos/"+login_name+"/"+repo_name+"/pulls \
 -d '{\"head\": \""+new_branch_name+"\", \
 \"base\": \""+master_branch_name+"\"}'"]

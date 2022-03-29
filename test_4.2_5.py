@@ -92,7 +92,7 @@ print(output)
 #print(output_new_branch)
 
 
-bash_command = "git checkout -b  "+new_branch_name+" --track "+remote_name+"/"+new_branch_name
+bash_command = "git checkout -b  "+new_branch_name#+" --track "+remote_name+"/"+new_branch_name
 output = sp.getoutput(bash_command)
 print(output)
 #
@@ -102,13 +102,15 @@ print(output)
 
 bash_command = "git add *"
 output = sp.getoutput(bash_command)
-print(output)
+#print(output)
 #
 bash_command = "git commit -m "+auto_commit_message
 output = sp.getoutput(bash_command)
 print(output)
 #
-
+#bash_command = "git push "+remote_name+" "+new_branch_name
+#output = sp.getoutput(bash_command)
+#print(output)
 
 #создать PR для вливания текущей ветки в main (с собщением из первого параметра скрипта)
 

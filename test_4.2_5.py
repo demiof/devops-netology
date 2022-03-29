@@ -3,7 +3,7 @@
 import os
 import sys
 import subprocess as sp
-
+import requests
 
 # Модель разработки - Магистральная
 login_name='demiof'
@@ -124,18 +124,23 @@ print(output)
 #print(bash_cmd_sha)
 
 
-bash_cmd_new_pr=["curl -s -i -u "+login_name+":"+PAT_name+" "+github_base_url+"/users/"+login_name,
-        "curl -s -X POST -H 'Accept: application/vnd.github.v3+json' "+github_base_url+"/repos/"+login_name+"/"+repo_name+"/pulls \
--d '{\"head\": \""+new_branch_name+"\", \
-\"base\": \""+master_branch_name+"\"}'"]
-#        "curl -s -X POST -H 'Authorization: token "+PAT_name+"' "+github_base_url+"/repos/"+login_name+"/"+repo_name+"/pulls \
+#bash_cmd_new_pr=["curl -s -i -u "+login_name+":"+PAT_name+" "+github_base_url+"/users/"+login_name,
+#        "curl -s -X POST -H 'Accept: application/vnd.github.v3+json' "+github_base_url+"/repos/"+login_name+"/"+repo_name+"/pulls \
 #-d '{\"head\": \""+new_branch_name+"\", \
 #\"base\": \""+master_branch_name+"\"}'"]
 
 
+#        "curl -s -X POST -H 'Authorization: token "+PAT_name+"' "+github_base_url+"/repos/"+login_name+"/"+repo_name+"/pulls \
+#-d '{\"head\": \""+new_branch_name+"\", \
+#\"base\": \""+master_branch_name+"\"}'"]
 
-output_new_pr = sp.getoutput(bash_cmd_new_pr)
-print(output_new_pr)
+r=requests.get(github_base_url, auth=(login_name,PAT_name))
+print(r.text)
+r1=requests.post(github_base_url+"/repos/"+login_name+"/"+repo_name+"/pulls", data={"\"head\"":"\""+new_branch_name+"\"","\"base\"":"\""+master_branch_name+"\""})
+print(r1.text)
+
+#output_new_pr = sp.getoutput(bash_cmd_new_pr)
+#print(output_new_pr)
 
 
 

@@ -3,27 +3,29 @@
 ## Обязательные задания
 
 1. Есть скрипт:
-	```python
+```python
     #!/usr/bin/env python3
 	a = 1
 	b = '2'
 	c = a + b
-	```
+```
 	* Какое значение будет присвоено переменной c?
 		
-		> При исплнении скрипта произойдет Несовместимость типом при вычислении 
+> При исплнении скрипта произойдет Несовместимость типом при вычислении 
 	
 	* Как получить для переменной c значение 12?
 
-		> Для этого переопределить в коде a = '1', т.е. a  - это строка
+> Для этого переопределить в коде a = '1', т.е. a  - это строка
 
 	* Как получить для переменной c значение 3?
 
-		> Для этого переопределить в коде a = 1 и b =2 - т.е. a и b - целочисленные
+> Для этого переопределить в коде a = 1 и b =2 - т.е. a и b - целочисленные
 
 2. Мы устроились на работу в компанию, где раньше уже был DevOps Engineer. Он написал скрипт, позволяющий узнать, какие файлы модифицированы в репозитории, относительно локальных изменений. Этим скриптом недовольно начальство, потому что в его выводе есть не все изменённые файлы, а также непонятен полный путь к директории, где они находятся. Как можно доработать скрипт ниже, чтобы он исполнял требования вашего руководителя?
 
-	```python
+
+
+```python
     #!/usr/bin/env python3
 
     import os
@@ -37,10 +39,10 @@
             print(prepare_result)
             break
 
-	```
+```
 
 
-
+> Вывод измененного скрипта для Руководителя:
 
 ```bash
 
@@ -67,8 +69,12 @@ root@dev1-10:/home/demi/netol_do/devops-netology# ./test_4.2_2.py
 Путь местонахождения: 
 /home/demi/netol_do/devops-netology/test_4.2_2.py
 ---------------------------------------
+
 ```
 
+
+
+> Измененный скрипт для Руководителя:
 
 ```python
 root@dev1-10:/home/demi/netol_do/devops-netology# cat test_4.2_2.py
@@ -119,7 +125,7 @@ root@dev1-10:/home/demi/netol_do/devops-netology#
 3. Доработать скрипт выше так, чтобы он мог проверять не только локальный репозиторий в текущей директории, а также умел воспринимать путь к репозиторию, который мы передаём как входной параметр. Мы точно знаем, что начальство коварное и будет проверять работу этого скрипта в директориях, которые не являются локальными репозиториями.
 
 
-> Вывод скрипта:
+> Вывод доработаннного скрипта:
 
 ```bash
 
@@ -174,7 +180,11 @@ Please use: Path (str) to Repository where search updates!
 
 ```
 
->  Скрипт:
+
+
+
+
+>  Доработанный Скрипт:
 
 ```bash
 
@@ -258,7 +268,7 @@ root@dev1-10:/home/demi/netol_do/devops-netology#
 4. Наша команда разрабатывает несколько веб-сервисов, доступных по http. Мы точно знаем, что на их стенде нет никакой балансировки, кластеризации, за DNS прячется конкретный IP сервера, где установлен сервис. Проблема в том, что отдел, занимающийся нашей инфраструктурой очень часто меняет нам сервера, поэтому IP меняются примерно раз в неделю, при этом сервисы сохраняют за собой DNS имена. Это бы совсем никого не беспокоило, если бы несколько раз сервера не уезжали в такой сегмент сети нашей компании, который недоступен для разработчиков. Мы хотим написать скрипт, который опрашивает веб-сервисы, получает их IP, выводит информацию в стандартный вывод в виде: <URL сервиса> - <его IP>. Также, должна быть реализована возможность проверки текущего IP сервиса c его IP из предыдущей проверки. Если проверка будет провалена - оповестить об этом в стандартный вывод сообщением: [ERROR] <URL сервиса> IP mismatch: <старый IP> <Новый IP>. Будем считать, что наша разработка реализовала сервисы: drive.google.com, mail.google.com, google.com.
 
 
-> Вывод скрипта:
+> Вывод прелагаемого скрипта для проверки IP по доменам:
 
 ```bash
 
@@ -303,7 +313,7 @@ root@dev1-10:/home/demi/netol_do/devops-netology# cat last_dig.log
 
 ```
 
-> Скрипт:
+> Предлагаемый скрипт для проверки IP по доменам :
 
 ```python
 
@@ -362,30 +372,19 @@ for i in Srvs:
 
         st1="ipv4_"+str(num)
         st2=k
-        #print(st1)
+        
         json_inner_dict.update({st1 : st2})
         num+=1
-        #i=i.replace('\'','\"')
-        #print(i)
-        
-        #ip=d.get(k)
-        #ipl=dl.get(k)
-        #if ip != ipl:
-            #print('\n[ERROR] '+i+' IP mismath: Old ip  -> '+ip+' New ip -> '+ipl+'\n')
-
-   
+           
     dig_json[i].append(json_inner_dict)
 
 #Проверка текущего резолва и резолва из лога
 
     d=dig_json.get(i)
-    #print(d)
-    
+        
     if not log_err:
         dl=last_dig_json.get(i)
-        #print(dl)
-
-        
+            
         for j in dig_json:
 
             print(j)
@@ -399,14 +398,10 @@ for i in Srvs:
 
 
 
-
-
-
 st=str(dig_json)
 st = st.replace('\'','\"')
 
 
-#print(st)
 f.write(st)
 
 
@@ -414,7 +409,6 @@ dig_res_splt=dig_res.split(' ')
 del dig_res_splt[0]
 
 print('\nWhole dictionary listing: \n')
-#print(dig_res_prn)
 
 print(dig_json)
 
@@ -432,186 +426,161 @@ root@dev1-10:/home/demi/netol_do/devops-netology#
 Так получилось, что мы очень часто вносим правки в конфигурацию своей системы прямо на сервере. Но так как вся наша команда разработки держит файлы конфигурации в github и пользуется gitflow, то нам приходится каждый раз переносить архив с нашими изменениями с сервера на наш локальный компьютер, формировать новую ветку, коммитить в неё изменения, создавать pull request (PR) и только после выполнения Merge мы наконец можем официально подтвердить, что новая конфигурация применена. Мы хотим максимально автоматизировать всю цепочку действий. Для этого нам нужно написать скрипт, который будет в директории с локальным репозиторием обращаться по API к github, создавать PR для вливания текущей выбранной ветки в master с сообщением, которое мы вписываем в первый параметр при обращении к py-файлу (сообщение не может быть пустым). При желании, можно добавить к указанному функционалу создание новой ветки, commit и push в неё изменений конфигурации. С директорией локального репозитория можно делать всё, что угодно. Также, принимаем во внимание, что Merge Conflict у нас отсутствуют и их точно не будет при push, как в свою ветку, так и при слиянии в master. Важно получить конечный результат с созданным PR, в котором применяются наши изменения. 
 
 
-> Скрипт:
+> Скрипт *:
 
 ```python
 
-#!/usr/bin/env python3
+root@dev1-10:/home/demi/netol_do/devops-netology# cat ./pr_gh/venv/pr-gh.py 
+#!/bin/env python3
 
-import os
 import sys
+import os
 import subprocess as sp
 import requests
 
-# Модель разработки - Магистральная
+# Модель разработки - Магистральная, т.е. нужны частые изменения - в виде PR, желательно не реже 1 раза в сутки 
+
+
 login_name='demiof'
 master_branch_name = 'main'
 new_branch_name = 'branch_api'
-PAT_name = os.environ['PAT_git_bash']
-auto_commit_message = 'autocommit'
 
+auto_commit_message = 'autocommit'
 github_base_url='https://api.github.com/'
 
+help_message = """
+pr-gh <branch> <message>
 
-# Определяем имя репозитория, проверяем в его ли папке и сущ-е .git
+Создаст Pull-Request для текущего репозитория. 
 
-A = sys.argv
-if len(A) <= 1: 
-    print('\nNO Arguments given! Need remote name\nType -h,--help for help...\n')
-    sys.exit()
-elif A[1]=='-h' or A[1]=='--help':
-    print('\nUse {this program name} {remote name}, execute in repo dir!\n')
-    sys.exit()
-elif type(A[1])==str:
+Параметры для передачи:
+    branch - выбранная ветка
+    message - сообщение для PR
+"""
+help_message_wrong_type="""
+
+Не верный тип аргумента(ов)!
+
+"""
+
+help_message_not_git="""
+
+Это не git репозиторий!
+
+"""
+
+help_message_no_PAT_within_env="""
+
+Не найден PAT  в переменых окружения!
+
+"""
+
+help_message_curepo_isouton_gh="""
+
+Текущий репозиторий не найден на GitHub!
+
+"""
+
+
+def repo_name() -> str:
+    return os.path.basename(os.getcwd())
+
+def fatal(message: str) -> None:
+    print(message)
+    sys.exit(1)
+
+def is_git_repo() -> bool:
+    if os.path.isdir(".git"):
+        return True
+    return False
+
+def get_current_branch() -> str:
+    f = open('.git/HEAD')
+    s = f.read().strip()
+    return s.split('/')[-1]
+
+class GithubClient():
+    def __init__(self, gh_user: str, token: str) -> None:
+        s = requests.Session()
+        s.auth = (gh_user,token)
+
+        self.session = s
+        self.gh_url = github_base_url
     
-    remote_name=A[1]
-    repo_name_cmd="basename -s .git `git config --get remote."+remote_name+".url`"
-    repo_name=sp.getoutput(repo_name_cmd)
+    def is_github_repo(self, repo_name: str) -> bool:
+       
+        resp = self.session.get(f"{self.gh_url}repos/{login_name}/{repo_name}")
+        if resp.status_code == 200:
+            return True
+        return False 
+    def create_pr(self, repo_name: str, branch_name: str, message: str) -> str:
+        resp = self.session.post(
+                    f"{self.gh_url}repos/{login_name}/{repo_name}/pulls",
+                    json={
+                        "title": message,
+                        "head": branch_name,
+                        "base": "main"
+                    },
+                )
 
-    check_path=os.path.exists('../'+repo_name)
-    if check_path:
-        print('\nGit repo dir of remote= \"'+remote_name+'\" exists!\n')
-        check_path=os.path.exists('./.git')
-        if check_path==False:
-            print('This is not git repository! Please, choose another one!\n');
-            sys.exit()
-        elif repo_name=='':
-            print('/nFailed to get repo name!/n')
+        if not resp.ok:
+            raise Exception(resp.json())
+        
+        data=resp.json()
+        return data["html_url"]
+
+if __name__ == "__main__":
+
+    # Определяем имя репозитория, проверяем в его ли папке и сущ-е .git
+
+    A = sys.argv
+    if len(A) <= 2: 
+        fatal(help_message)
+    elif A[1]=='-h' or A[1]=='--help':
+        fatal(help_message)
+    elif type(A[1])==str and type(A[2])==str:
+        
+        remote_name=A[1]
+        pr_message=A[2]
+
+        if not is_git_repo():
+            fatal(help_message_not_git)
         else:
-            print('Repo name is '+str(repo_name) )
+            print('\nИмя удаленного репозитория - '+str(remote_name)+'\n'+'Сообщение для pull request - '+A[2]+'\n')
+    else: 
+        fatal(help_message_wrong_type)
+
+    if os.environ.get('PAT_git_bash', None) is None:
+        fatal(help_message_no_PAT_within_env)
     else:
-        print('Git repo path/file of remote= \"'+remote_name+'\" does not exist!\n')
-        sys.exit()
-else: 
-    print('Wrong argument type!\n')
-    sys.exit()
+        PAT_name = os.environ.get('PAT_git_bash', None)
+
+    gh_client = GithubClient(login_name,PAT_name)
+    if not gh_client.is_github_repo(repo_name()):
+        fatal(help_message_curepo_isouton_gh)
 
 
-#bash_command = ["git pull ", "git status --porcelain --ignored -uno "]
-#result_os = os.popen(' && '.join(bash_command)).read()
-
-
-#перенос изменений с сервера в локальный репозиторий
-
-bash_command = ["git pull "+remote_name+" "+master_branch_name]
-output = sp.getoutput(bash_command)
-print(output)
-#result_os = os.popen(' && '.join(bash_command)).read()
-
-#создать новую ветку
-
-
-
-    #получить SHA тек. объекта
-#bash_cmd_sha="curl -s -H 'Authorization: token "+PAT_name+"' https://api.github.com/repos/"+login_name+"/"+repo_name+"/git/refs/heads/"+master_branch_name+" | jq -r '.object.sha'"
-
-#output_sha = sp.getoutput(bash_cmd_sha)
-
-#print(output_sha)
-
-#print(bash_cmd_sha)
-
-
-#bash_cmd_new_branch="curl -s -X POST -H 'Authorization: token "+PAT_name+"' \
-#https://api.github.com/repos/"+login_name+"/"+repo_name+"/git/refs \
-#-d '{\"ref\": \"refs/heads/"+new_branch_name+"\", \
-#\"sha\": \""+output_sha+"\"}'"
-
-
-#output_new_branch = sp.getoutput(bash_cmd_new_branch)
-
-
-#curl -X POST -H "Authorization: token $TOKEN" \
-#-d  "{\"ref\": \"refs/heads/$New_branch_name\",\"sha\": \"$SHA\"}" \ "https://api.github.com/repos/<REPO>/git/refs"
-
-
-#print(bash_cmd_new_branch)
-
-#print(output_new_branch)
-
-
-bash_command = "git checkout -b  "+new_branch_name+" --track "+remote_name+"/"+new_branch_name
-output = sp.getoutput(bash_command)
-print(output)
-#
-
-
-#закомитить в ней изменения
-
-bash_command = "git add *"
-output = sp.getoutput(bash_command)
-print(output)
-#
-bash_command = "git commit -m "+auto_commit_message
-output = sp.getoutput(bash_command)
-print(output)
-#
-
-
-#создать PR для вливания текущей ветки в main (с собщением из первого параметра скрипта)
-
-
-    #получить SHA тек. объекта
-#bash_cmd_sha="curl -s -H 'Authorization: token "+PAT_name+"' https://api.github.com/repos/"+login_name+"/"+repo_name+"/git/refs/heads/"+master_branch_name+" | jq -r '.object.sha'"
-
-#output_sha = sp.getoutput(bash_cmd_sha)
-
-#print(output_sha)
-#print(bash_cmd_sha)
-
-
-#bash_cmd_new_pr=["curl -s -i -u "+login_name+":"+PAT_name+" "+github_base_url+"/users/"+login_name,
-#        "curl -s -X POST -H 'Accept: application/vnd.github.v3+json' "+github_base_url+"/repos/"+login_name+"/"+repo_name+"/pulls \
-#-d '{\"head\": \""+new_branch_name+"\", \
-#\"base\": \""+master_branch_name+"\"}'"]
-
-
-
-
-#        "curl -s -X POST -H 'Authorization: token "+PAT_name+"' "+github_base_url+"/repos/"+login_name+"/"+repo_name+"/pulls \
-#-d '{\"head\": \""+new_branch_name+"\", \
-#\"base\": \""+master_branch_name+"\"}'"]
-
-
-
-#output_new_pr = sp.getoutput(bash_cmd_new_pr)
-#print(output_new_pr)
-
-
-
-
-
-
-
-
-
-
-
-
-
-r=requests.get(github_base_url+"/users/"+login_name, auth=(login_name,PAT_name))
-print(r.json())
-r1=requests.post(github_base_url+"/repos/"+login_name+"/"+repo_name+"/pulls", data={"\"head\"":"\""+new_branch_name+"\"","\"base\"":"\""+master_branch_name+"\""})
-print(r1.json())
-
-#output_new_pr = sp.getoutput(bash_cmd_new_pr)
-#print(output_new_pr)
-
-
-
-bash_command = "git checkout "+master_branch_name#+" --track "+remote_name+"/"+new_branch_name
-output = sp.getoutput(bash_command)
-print(output)
-
-
-
-#замерджить с main
-
-#если веток, кроме main более 3 - удалить Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
+    branch_name = get_current_branch()
+    print(branch_name)
+    try:
+        url = gh_client.create_pr(repo_name(), branch_name, pr_message)
+    except Exception as e:
+        fatal(f"{str(e)}")
+    print(f"Ссылка на PR: {url}")
 
 
 ```
 
+> Вывод скрипта *:
 
+```bash
 
----
+root@dev1-10:/home/demi/netol_do/devops-netology# pr-gh origin '123'
+
+Имя удаленного репозитория - origin
+Сообщение для pull request - 123
+
+branch_api
+Ссылка на PR: https://github.com/demiof/devops-netology/pull/2
+
+```

@@ -845,11 +845,15 @@ root@dev1-10:~# crontab -l
 # m h  dom mon dow   command
 59 23 1 * * /root/vault/cert_man.sh test.linkintel.ru renew
 root@dev1-10:~# 
-
-
 ```
 
+> Скришот:
 
+```bash
+
+https://drive.google.com/file/d/16oV1aQawpjaYFmWaFVjjIFfIS67tnx4U/view?usp=sharing
+
+```
 
 
 ## Результат

@@ -640,7 +640,7 @@ root@dev1-10:/home/demi/netol_do/devops-netology#
 ```bash
 
 
-root@dev1-10:/home/demi/netol_do/devops-netology# cat /root/vault/cert_man.sh 
+root@dev1-10:/home/demi/netol_do/devops-netology# cat ./vault/cert_man.sh 
 #!/bin/bash
 
 

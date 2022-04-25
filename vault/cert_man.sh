@@ -1,6 +1,9 @@
 #!/bin/bash
 	
-	
+
+crt_dir="/etc/ssl/certs"
+key_dir="/etc/ssl/private"
+
 renew() {
 
 
@@ -26,7 +29,6 @@ renew() {
 
 
 
-#	cat last_cert_key | sed ':a;N;$!ba; s/\n/ /g' last_cert_key | grep -o -E "certificate[ ]+[-]+BEGIN CERTIFICATE[-]+(.)* [-]+END CERTIFICATE[-]+ expiration" | sed -e "s/certificate         //g" | sed -e "s/ expiration//g" | sed -e "y/ /\n/" | tee /etc/ssl/certs/$domain_all.crt
 
 
 
@@ -34,6 +36,15 @@ renew() {
 
 
 	cat last_cert_key | sed ':a;N;$!ba;s/\n/ /g' last_cert_key | grep -o -E "[-]+BEGIN RSA PRIVATE KEY[-]+(.|\r\n|\n|$)*[-]+END RSA PRIVATE KEY[-]+" | sed 's/ /\n/g' | sed ':a;N;$!ba;s/RSA\n/RSA /g' | sed ':a;N;$!ba;s/PRIVATE\n/PRIVATE /g' | sed ':a;N;$!ba;s/BEGIN\n/BEGIN /g' | sed ':a;N;$!ba;s/END\n/END /g' | tee /etc/ssl/private/$domain_all.key
+
+
+	#cat www.example.com.crt bundle.crt > www.example.com.chained.crt
+	touch $crt_dir/$domain_all.chained.crt
+	cat $crt_dir/$domain_all.crt > $crt_dir/$domain_all.chained.crt
+	cat CA_cert_$domain_all.crt >> $crt_dir/$domain_all.chained.crt
+	echo -e "\n" >> $crt_dir/$domain_all.chained.crt 
+	cat intermediate.cert.$1.pem >> $crt_dir/$domain_all.chained.crt
+
 
 
 }
@@ -53,7 +64,7 @@ new()  {
 	#generate intermediate ca
 	vault secrets enable -path=pki_int pki
 	vault secrets tune -max-lease-ttl=43800h pki_int
-	vault write -format=json pki_int/intermediate/generate/internal common_name="test.$1 Intermediate Authority" | jq -r '.data.csr' > pki_intermediate.$1.csr
+	vault write -format=json pki_int/intermediate/generate/internal common_name="$1 Intermediate Authority" | jq -r '.data.csr' > pki_intermediate.$1.csr
 	vault write -format=json pki/root/sign-intermediate csr=@pki_intermediate.$1.csr format=pem_bundle ttl="43800h" | jq -r '.data.certificate' > intermediate.cert.$1.pem
 	vault write pki_int/intermediate/set-signed certificate=@intermediate.cert.$1.pem
 	renew $1
@@ -144,7 +155,7 @@ else
 			;;
 			'restart')
 
-				echo -e "\nMaking hard restar... Please check files & homedir!\n"
+				echo -e "\nMaking hard restart... Please check files & homedir!\n"
 				restart
 			;;
 			esac

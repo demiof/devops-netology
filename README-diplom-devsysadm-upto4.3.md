@@ -862,6 +862,12 @@ root@dev1-10:~#
 
 > Скришот:
 
+
+
+
+![Screenshot alt](/test.linkintel.ru3.png "Screenshot!")
+
+
 ```bash
 
 

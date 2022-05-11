@@ -334,9 +334,11 @@ root@dev1-10:~#
 [https://hub.docker.com/layers/212051323/demiof/ansible/2.9.24/images/sha256-f1c0ac54a392d720ccedca01ab7d35426379d12dd84920e083b56736c6d9b611?context=repo](https://hub.docker.com/layers/212051323/demiof/ansible/2.9.24/images/sha256-f1c0ac54a392d720ccedca01ab7d35426379d12dd84920e083b56736c6d9b611?context=repo)
 
 
-> Обнаружил что 2.9.24 не рабочая и есть кментарий с решением проблемы с багом (обновления ansible до 2.9.26)
+> Обнаружил что 2.9.24 не рабочая и есть комментарий с решением проблемы с багом (обновления ansible до 2.9.26)
 
-[https://github.com/ansible-community/ansible-lint-action/issues/41#issuecomment-933663572]:https://github.com/ansible-community/ansible-lint-action/issues/41#issuecomment-933663572
+[https://github.com/ansible-community/ansible-lint-action/issues/41#issuecomment-933663572](https://github.com/ansible-community/ansible-lint-action/issues/41#issuecomment-933663572)
+
+> Так выглядит баг в контейнере образа:
 
 ```bash
 

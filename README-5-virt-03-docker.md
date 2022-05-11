@@ -34,7 +34,7 @@ Hey, Netology
 ```
 Опубликуйте созданный форк в своем репозитории и предоставьте ответ в виде ссылки на https://hub.docker.com/username_repo.
 
-![https://hub.docker.com/layers/211526835/demiof/test/nginx_first_page/images/sha256-e117bdb844738fadffda8a1c6236a7a2644be7c640c708401ceafef1bf2b8de8?context=repo](https://hub.docker.com/layers/211526835/demiof/test/nginx_first_page/images/sha256-e117bdb844738fadffda8a1c6236a7a2644be7c640c708401ceafef1bf2b8de8?context=repo)
+[https://hub.docker.com/layers/211526835/demiof/test/nginx_first_page/images/sha256-e117bdb844738fadffda8a1c6236a7a2644be7c640c708401ceafef1bf2b8de8?context=repo](https://hub.docker.com/layers/211526835/demiof/test/nginx_first_page/images/sha256-e117bdb844738fadffda8a1c6236a7a2644be7c640c708401ceafef1bf2b8de8?context=repo)
 
 > Ход выполнения и содержимое Dockerfile:
 

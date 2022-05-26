@@ -1,0 +1,12 @@
+Идентификатор ключа:
+YCAJETQ8r3kU45vCg6YX8V4Al
+Ваш секретный ключ:
+YCPU9vwnTxD7sDL-xF2p3hwWGthVkDTrDdwlFkhe
+Сохраните идентификатор и ключ. После закрытия диалога значение ключа будет недоступно.
+
+
+root@dev1-10:~/yc/src/packer# yc iam key create --service-account-name demi --output key.json
+id: ajeail6m82hkd3qlpmac
+service_account_id: aject26ihft85087ht1l
+created_at: "2022-05-17T11:22:10.577952940Z"
+key_algorithm: RSA_2048

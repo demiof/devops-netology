@@ -24,6 +24,7 @@
         with_items:
           - git
           - curl
+          - vim
 
       - name: Add docker repository
         command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
@@ -61,3 +62,6 @@
 
       - name: Up all services in compose
         command: docker-compose -f /opt/stack/docker-compose.yaml up -d
+
+      - name: Installing ctop
+        raw: $(curl -o /usr/local/sbin/ctop -L https://github.com/bcicen/ctop/releases/download/v0.7.7/ctop-0.7.7-linux-amd64 && chmod +x /usr/local/sbin/ctop) 

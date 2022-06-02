@@ -1,0 +1,24 @@
+version: '3.0'
+networks:
+  monitoring:
+    driver: bridge
+services:
+  postgresql:
+    container_name: postgres_12_2_vol-one-more-container
+    image: postgres
+    environment:
+
+      POSTGRES_USER: test-admin-user
+      POSTGRES_PASSWORD: ''
+      POSTGRES_URL: postgres://test-admin-user:''@localhost:5432/test_db
+      POSTGRES_DB: test_db
+      POSTGRES_HOST: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - db-data-vol1:/var/lib/docker/volumes/db-data-vol1/_data
+      - db-data-vol2:/var/lib/docker/volumes/db-data-vol2/_data
+volumes:
+  db-data-vol1:
+  db-data-vol2:
+    
+

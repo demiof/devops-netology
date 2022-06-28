@@ -1,0 +1,5 @@
+will_be_moved
+
+123-fixed
+234-fixed
+Addded new string #798

@@ -12,6 +12,9 @@
 
 - составьте Dockerfile-манифест для elasticsearch
 - соберите docker-образ и сделайте `push` в ваш docker.io репозиторий
+
+[https://hub.docker.com/layers/246655966/demiof/my_es_test_cluster/8.3.1/images/sha256-81025e1548da9371086969f96dfe27b140f46af879c0f1171713ae2b63505710?context=repo](https://hub.docker.com/layers/246655966/demiof/my_es_test_cluster/8.3.1/images/sha256-81025e1548da9371086969f96dfe27b140f46af879c0f1171713ae2b63505710?context=repo)
+
 - запустите контейнер из получившегося образа и выполните запрос пути `/` c хост-машины
 
 Требования к `elasticsearch.yml`:
@@ -23,8 +26,7 @@
 
 ```bash
 
-root@dev1-10:~/netol_do/elasticsearch# cat Dockerfile 
-ARG version=8.2.3
+ARG version=8.3.1
 FROM centos:latest
 #elasticsearch USER & GROUP
 ENV USER=elasticsearch
@@ -54,69 +56,63 @@ ENV GOSU_VERSION 1.14
 
 LABEL creator="demi"
 
-#updating yum && \
+#preparing os
+
 RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && \
-sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-* && \
-rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial && \
-yum update -y && \
-#install elasticsearch with yum
-groupadd -g ${GID} ${GROUP} && useradd -u ${UID} -g ${GROUP} -s /bin/sh -m ${USER} && \
-yum -y install wget gpg java-1.8.0-openjdk && yum clean all && \
-#echo "" > /etc/yum.repos.d/elasticsearch.repo && \
-#echo "[elasticsearch]" >> /etc/yum.repos.d/elasticsearch.repo && \
-#echo "name=Elasticsearch repository for 8.x packages" >> /etc/yum.repos.d/elasticsearch.repo && \
-#echo "baseurl=https://artifacts.elastic.co/packages/8.x/yum" >> /etc/yum.repos.d/elasticsearch.repo && \
-#echo "gpgcheck=1" >> /etc/yum.repos.d/elasticsearch.repo && \
-#echo "gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch" >> /etc/yum.repos.d/elasticsearch.repo && \
-#echo "enabled=0" >> /etc/yum.repos.d/elasticsearch.repo && \
-#echo "autorefresh=1" >> /etc/yum.repos.d/elasticsearch.repo && \
-#echo "type=rpm-md" >> /etc/yum.repos.d/elasticsearch.repo && \
-#echo "" >> /etc/yum.repos.d/elasticsearch.repo && \
-#rm -rf /var/lib/apt/lists/* && \
-#rm -rf /usr/lib/sysctl.d/elasticsearch.conf && \
-#rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch && \
-#yum -y install --enablerepo=elasticsearch elasticsearch && \
-#yum clean all && \
- wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-amd64" && \
- wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-amd64.asc" && \
- export GNUPGHOME="$(mktemp -d)" && \
- gpg --keyserver hkps://keys.openpgp.org --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 && \
- gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu && \
- rm -rf "$GNUPGHOME" /usr/local/bin/gosu.asc && \
- chmod +x /usr/local/bin/gosu && \
- gosu nobody true && \
-rm -rf /var/lib/apt/lists/* && \
-yum install net-tools vim -y
+    sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-* && \
+    rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial && \
+    yum update -y && yum install net-tools vim wget -y && \
+    wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-amd64" && \
+    wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-amd64.asc" && \
+    export GNUPGHOME="$(mktemp -d)" && \
+    gpg --keyserver hkps://keys.openpgp.org --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 && \
+    gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu && \
+    rm -rf "$GNUPGHOME" /usr/local/bin/gosu.asc && \
+    chmod +x /usr/local/bin/gosu && \
+    gosu nobody true && \
+    rm -rf /var/lib/apt/lists/*
 
-#installing perl-Digest-SHA.x86_6
-#yum install perl-Digest-SHA.x86_64 -y
+#install elasticsearch
+RUN mkdir ${ES_HOME} && mkdir /tmp/elasticsearch/
+WORKDIR /tmp/elasticsearch
+ADD https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.3.1-linux-x86_64.tar.gz ./elasticsearch.tar.gz 
+RUN tar -zxf ./elasticsearch.tar.gz --strip-components=1 && cp -r ./ ${ES_HOME}/
 
 
-
-#copy configuration file into the container to confdir for archive installation 
-COPY elasticsearch.yml ${ES_ETC}/elasticsearch.yml
-
-RUN mkdir -p ${ES_HOME}
 WORKDIR ${ES_HOME}
-RUN wget -O ${ES_HOME}/elasticsearch-8.2.3-x86_64.rpm "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.2.3-x86_64.rpm" && \
-#install elasticsearch with yum
-rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch && \
-rpm -ivh elasticsearch-8.2.3-x86_64.rpm
+RUN sed -i -e 's/ES_DISTRIBUTION_TYPE=tar/ES_DISTRIBUTION_TYPE=docker/' bin/elasticsearch-env && \
+    mkdir data && mkdir ${ES_DATA_LOGS} && \
+    find . -type d -exec chmod 0555 {} + && \
+    find . -type f -exec chmod 0444 {} + && \
+    chmod 0555 bin/* jdk/bin/* jdk/lib/jspawnhelper modules/x-pack-ml/platform/linux-*/bin/* && \
+    chmod 0775 bin config config/jvm.options.d data logs plugins && \
+    find config -type f -exec chmod 0664 {} + && \
+    groupadd -g ${GID} ${GROUP} && useradd -u ${UID} -g ${GROUP} -s /bin/sh -m ${USER}
 
-COPY entrypoint.sh /
-RUN chmod 755 /entrypoint.sh
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY elasticsearch.yml ${ES_HOME}/config/elasticsearch.yml
+
+RUN chmod g=u /etc/passwd && \
+    chmod 0555 /usr/local/bin/entrypoint.sh && \
+    find / -xdev -perm -4000 -exec chmod ug-s {} + && \
+    chmod 0775 /usr/share/elasticsearch ${ES_DATA_LOGS} && \
+    chown elasticsearch bin config config/jvm.options.d data logs plugins ${ES_DATA_LOGS}
+
+RUN set -Eeuo pipefail && trust extract \
+    --overwrite \
+    --format=java-cacerts \
+    --filter=ca-anchors \
+    --purpose=server-auth \
+    ${ES_HOME}/jdk/lib/security/cacerts
 
 # expose the default Elasticsearch port
-EXPOSE 9200:9200
-EXPOSE 9300:9300
+EXPOSE 9200:9300
 
 # entrypoint for elasticsearch
-# RUN touch ./entrypoint.sh && echo -e '#!/bin/sh \n ${ES_EXEC_FILE} -d -p ${PID} \$@\n' > ./entrypoint.sh && chmod +x ./entrypoint.sh
-#ENTRYPOINT [ "./entrypoint.sh" ]
-#ENTRYPOINT [ "/bin/bash", "-c", "source ~/.bashrc && ./entrypoint.sh ${@}", "--" ]
-USER root:root
-ENTRYPOINT ["/entrypoint.sh" ]
-CMD [ "elasticsearch" ]
+
+ENTRYPOINT ["gosu", "elasticsearch:root", "/usr/local/bin/entrypoint.sh"]
+
+CMD ["elasticsearch"]
 
 ```
 
@@ -124,72 +120,90 @@ CMD [ "elasticsearch" ]
 
 ```bash
 
-#!/bin/sh 
-
+#!/bin/bash
 set -e
 
-# Add elasticsearch as command if needed
-if [ "${1:0:1}" = '-' ]; then
-        set -- elasticsearch "$@"
+# Files created by Elasticsearch should always be group writable too
+umask 0002
+
+# Allow user specify custom CMD, maybe bin/elasticsearch itself
+# for example to directly specify `-E` style parameters for elasticsearch on k8s
+# or simply to run /bin/bash to check the image
+if [[ "$1" == "eswrapper" || $(basename "$1") == "elasticsearch" ]]; then
+  # Rewrite CMD args to remove the explicit command,
+  # so that we are backwards compatible with the docs
+  # from the previous Elasticsearch versions < 6
+  # and configuration option:
+  # https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docker.html#_d_override_the_image_8217_s_default_ulink_url_https_docs_docker_com_engine_reference_run_cmd_default_command_or_options_cmd_ulink
+  # Without this, user could specify `elasticsearch -E x.y=z` but
+  # `bin/elasticsearch -E x.y=z` would not work. In any case,
+  # we want to continue through this script, and not exec early.
+  set -- "${@:2}"
+else
+  # Run whatever command the user wanted
+  exec "$@"
 fi
 
-#chown root privileges to ${USER} and ${GROUP}
-if [ "$1" = 'elasticsearch' -a "$(id -u)" = '0' ]; then
+# Allow environment variables to be set by creating a file with the
+# contents, and setting an environment variable with the suffix _FILE to
+# point to it. This can be used to provide secrets to a container, without
+# the values being specified explicitly when running the container.
+#
+# This is also sourced in elasticsearch-env, and is only needed here
+# as well because we use ELASTIC_PASSWORD below. Sourcing this script
+# is idempotent.
+source /usr/share/elasticsearch/bin/elasticsearch-env-from-file
 
-        echo 'parameter set & runuser=0'
-
-        # Change the ownership of USER-mutable directories to elasticsearch
-        for path in \
-                ${ES_DATA} \
-                ${ES_LOGS} \
-                ${ES_SYSCONFIG} \
-                ${ES_DATA_LOGS} \
-                ${ES_VARLOG} \
-                ${ES_ETC} \
-        ; do
-                if [ ! -d "$path" -a ! -f "$path" ] 
-                  then mkdir -p "$path" 
-                fi ;
-                chown -R ${USER}:${GROUP} "$path" ;
-        done
-
-        chown -R ${USER}:${GROUP} ${ES_HOME}
-        chown ${USER}:${GROUP} /etc/elasticsearch
-
-    /usr/local/bin/gosu ${USER}:${GROUP} ${ES_EXEC_FILE} -d
-
+if [[ -f bin/elasticsearch-users ]]; then
+  # Check for the ELASTIC_PASSWORD environment variable to set the
+  # bootstrap password for Security.
+  #
+  # This is only required for the first node in a cluster with Security
+  # enabled, but we have no way of knowing which node we are yet. We'll just
+  # honor the variable if it's present.
+  if [[ -n "$ELASTIC_PASSWORD" ]]; then
+    [[ -f /usr/share/elasticsearch/config/elasticsearch.keystore ]] || (elasticsearch-keystore create)
+    if ! (elasticsearch-keystore has-passwd --silent) ; then
+      # keystore is unencrypted
+      if ! (elasticsearch-keystore list | grep -q '^bootstrap.password$'); then
+        (echo "$ELASTIC_PASSWORD" | elasticsearch-keystore add -x 'bootstrap.password')
+      fi
+    else
+      # keystore requires password
+      if ! (echo "$KEYSTORE_PASSWORD" \
+          | elasticsearch-keystore list | grep -q '^bootstrap.password$') ; then
+        COMMANDS="$(printf "%s\n%s" "$KEYSTORE_PASSWORD" "$ELASTIC_PASSWORD")"
+        (echo "$COMMANDS" | elasticsearch-keystore add -x 'bootstrap.password')
+      fi
+    fi
+  fi
 fi
 
-```
+if [[ -n "$ES_LOG_STYLE" ]]; then
+  case "$ES_LOG_STYLE" in
+    console)
+      # This is the default. Nothing to do.
+      ;;
+    file)
+      # Overwrite the default config with the stack config. Do this as a
+      # copy, not a move, in case the container is restarted.
+      cp -f /usr/share/elasticsearch/config/log4j2.file.properties /usr/share/elasticsearch/config/log4j2.properties
+      ;;
+    *)
+      echo "ERROR: ES_LOG_STYLE set to [$ES_LOG_STYLE]. Expected [console] or [file]" >&2
+      exit 1 ;;
+  esac
+fi
 
-- ссылку на образ в репозитории dockerhub
+if [[ -n "$ENROLLMENT_TOKEN" ]]; then
+  POSITIONAL_PARAMETERS="--enrollment-token $ENROLLMENT_TOKEN"
+else
+  POSITIONAL_PARAMETERS=""
+fi
 
-**[https://hub.docker.com/repository/docker/demiof/my_es_test_cluster](https://hub.docker.com/repository/docker/demiof/my_es_test_cluster)**
-
-- ответ `elasticsearch` на запрос пути `/` в json виде
-
-```bash
-
-[root@8d8c5fc77975 elasticsearch]# curl --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://localhost:9200/
-Enter host password for user 'elastic':
-{
-  "name" : "netology_test",
-  "cluster_name" : "my-es-test-cluster",
-  "cluster_uuid" : "of4_NKPwSoesdcldFoIf_g",
-  "version" : {
-    "number" : "8.2.3",
-    "build_flavor" : "default",
-    "build_type" : "rpm",
-    "build_hash" : "9905bfb62a3f0b044948376b4f607f70a8a151b4",
-    "build_date" : "2022-06-08T22:21:36.455508792Z",
-    "build_snapshot" : false,
-    "lucene_version" : "9.1.0",
-    "minimum_wire_compatibility_version" : "7.17.0",
-    "minimum_index_compatibility_version" : "7.0.0"
-  },
-  "tagline" : "You Know, for Search"
-}
-[root@8d8c5fc77975 elasticsearch]# 
+# Signal forwarding and child reaping is handled by `tini`, which is the
+# actual entrypoint of the container
+exec /usr/share/elasticsearch/bin/elasticsearch $POSITIONAL_PARAMETERS <<<"$KEYSTORE_PASSWORD"
 
 ```
 

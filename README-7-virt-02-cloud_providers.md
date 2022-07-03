@@ -160,6 +160,8 @@ root@dev1-10:~/netol_do/yc2/terraform#
 
 1. Ссылку на репозиторий с исходной конфигурацией терраформа.  
 
+[https://github.com/demiof/devops-netology/tree/main/yc2/terraform](https://github.com/demiof/devops-netology/tree/main/yc2/terraform)
+
 ---
 
 ### Как cдавать задание

@@ -420,6 +420,44 @@ root@dev1-10:~/netol_do/yc-states-backends/terraform#
 
 ```
 
+```bash
+
+{
+  "builders": [
+    {
+      "type":      "yandex",
+      "token":     "${TF_VAR_token}",
+      "folder_id": "${TF_VAR_folder_id}",
+      "zone":      "ru-central1-b",
+
+      "image_name":        "debian-9-nginx-{{isotime | clean_resource_name}}",
+      "image_family":      "debian-web-server",
+      "image_description": "my custom debian with nginx",
+
+      "source_image_family": "debian-9",
+      "subnet_id":           "${TF_VAR_vpc_subnet}",
+      "use_ipv4_nat":        true,
+      "disk_type":           "network-ssd",
+      "ssh_username":        "debian"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "echo 'updating APT'",
+        "sudo apt-get update -y",
+        "sudo apt-get install -y nginx",
+        "sudo su -",
+        "sudo systemctl enable nginx.service",
+        "curl localhost"
+      ]
+    }
+  ]
+} 
+
+```
+
 ---
 
 ### Как cдавать задание

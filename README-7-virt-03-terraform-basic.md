@@ -367,7 +367,7 @@ root@dev1-10:~/netol_do/yc-states-backends/terraform#
     {
       "type":      "yandex",
       "token":     "${TF_VAR_token}",
-      "folder_id": "b1g7jkg3844vv1nn5r1a",
+      "folder_id": "${TF_VAR_folder_id}",
       "zone":      "ru-central1-b",
 
       "image_name":        "debian-9-nginx-{{isotime | clean_resource_name}}",
@@ -375,7 +375,7 @@ root@dev1-10:~/netol_do/yc-states-backends/terraform#
       "image_description": "my custom debian with nginx",
 
       "source_image_family": "debian-9",
-      "subnet_id":           "e2lclbkvfe9r5bd6m89g",
+      "subnet_id":           "${TF_VAR_vpc_subnet}",
       "use_ipv4_nat":        true,
       "disk_type":           "network-ssd",
       "ssh_username":        "debian"

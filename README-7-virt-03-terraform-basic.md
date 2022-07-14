@@ -235,78 +235,33 @@ root@dev1-10:~/netol_do/yc-states-backends/terraform# terraform workspace list
 * prod
   stage
 
-root@dev1-10:~/netol_do/yc-states-backends/terraform# terraform plan
+```
+
+```bash
+
+root@dev1-10:~/netol_do/yc-states-backends/terraform# terraform apply
+yandex_vpc_network.default: Refreshing state... [id=enpllvl1bj4m93jr0chb]
+yandex_compute_instance.main["first_vm_for_prod"]: Refreshing state... [id=epdhbu9ahpvmjcfiflqo]
+yandex_vpc_subnet.default: Refreshing state... [id=e2l9vngkh1botnhk19pb]
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following
 symbols:
   + create
+  ~ update in-place
 
 Terraform will perform the following actions:
 
-  # yandex_compute_instance.main["first_vm_for_prod"] will be created
-  + resource "yandex_compute_instance" "main" {
-      + created_at                = (known after apply)
-      + folder_id                 = (known after apply)
-      + fqdn                      = (known after apply)
-      + hostname                  = (known after apply)
-      + id                        = (known after apply)
-      + metadata                  = {
-          + "ssh-keys" = <<-EOT
-                ubuntu:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/EBW4EvwnnNwWdOQ1j6YIOWB3vva9eirTQVKrRCytfctp9ywoprD4HyLUAY5nWwlepkD3JtMDQEsuPEZpm6ehqOX5oteK4NZ8Jp6aPwQLIyK5g2QetxJxnEHMpXW2nymnNBAen/2tX2c65rAVn0k7sDAY34+IerZaVKU1PKF2DjkK845CZRbYoIOnCjPZVGu4uIzlPMTPgPWTMP4qjIuq3kgnJsOBpTRIf7OpDKSKXKuKRfE/eILlBONPpRtFxkLZwmBw1B3KsNjbeAguIbkMgOoUmdzvxffcPR0Wsu0me52NQJ4srgVL5QTXGgUSLgoTv1L30fFi0jqFVwZVTCWF root@dev1
-            EOT
-        }
-      + name                      = "vm-for-prod"
-      + network_acceleration_type = "standard"
-      + platform_id               = "standard-v1"
-      + service_account_id        = (known after apply)
-      + status                    = (known after apply)
-      + zone                      = (known after apply)
+  # yandex_compute_instance.main["first_vm_for_prod"] will be updated in-place
+  ~ resource "yandex_compute_instance" "main" {
+        id                        = "epdhbu9ahpvmjcfiflqo"
+      - name                      = "vm-for-prod" -> null
+        # (10 unchanged attributes hidden)
 
-      + boot_disk {
-          + auto_delete = true
-          + device_name = (known after apply)
-          + disk_id     = (known after apply)
-          + mode        = (known after apply)
 
-          + initialize_params {
-              + block_size  = (known after apply)
-              + description = (known after apply)
-              + image_id    = "fd8q7cikvj0mggcs886d"
-              + name        = (known after apply)
-              + size        = (known after apply)
-              + snapshot_id = (known after apply)
-              + type        = "network-hdd"
-            }
-        }
 
-      + network_interface {
-          + index              = (known after apply)
-          + ip_address         = (known after apply)
-          + ipv4               = true
-          + ipv6               = (known after apply)
-          + ipv6_address       = (known after apply)
-          + mac_address        = (known after apply)
-          + nat                = true
-          + nat_ip_address     = (known after apply)
-          + nat_ip_version     = (known after apply)
-          + security_group_ids = (known after apply)
-          + subnet_id          = "e2lclbkvfe9r5bd6m89g"
-        }
 
-      + placement_policy {
-          + host_affinity_rules = (known after apply)
-          + placement_group_id  = (known after apply)
-        }
 
-      + resources {
-          + core_fraction = 100
-          + cores         = 2
-          + memory        = 2
-        }
-
-      + scheduling_policy {
-          + preemptible = (known after apply)
-        }
+        # (5 unchanged blocks hidden)
     }
 
   # yandex_compute_instance.main["second_vm_for_prod"] will be created
@@ -321,7 +276,6 @@ Terraform will perform the following actions:
                 ubuntu:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/EBW4EvwnnNwWdOQ1j6YIOWB3vva9eirTQVKrRCytfctp9ywoprD4HyLUAY5nWwlepkD3JtMDQEsuPEZpm6ehqOX5oteK4NZ8Jp6aPwQLIyK5g2QetxJxnEHMpXW2nymnNBAen/2tX2c65rAVn0k7sDAY34+IerZaVKU1PKF2DjkK845CZRbYoIOnCjPZVGu4uIzlPMTPgPWTMP4qjIuq3kgnJsOBpTRIf7OpDKSKXKuKRfE/eILlBONPpRtFxkLZwmBw1B3KsNjbeAguIbkMgOoUmdzvxffcPR0Wsu0me52NQJ4srgVL5QTXGgUSLgoTv1L30fFi0jqFVwZVTCWF root@dev1
             EOT
         }
-      + name                      = "vm-for-prod"
       + network_acceleration_type = "standard"
       + platform_id               = "standard-v1"
       + service_account_id        = (known after apply)
@@ -375,47 +329,33 @@ Terraform will perform the following actions:
         }
     }
 
-  # yandex_vpc_network.default will be created
-  + resource "yandex_vpc_network" "default" {
-      + created_at                = (known after apply)
-      + default_security_group_id = (known after apply)
-      + folder_id                 = (known after apply)
-      + id                        = (known after apply)
-      + labels                    = (known after apply)
-      + name                      = "net"
-      + subnet_ids                = (known after apply)
-    }
+Plan: 1 to add, 1 to change, 0 to destroy.
 
-  # yandex_vpc_subnet.default will be created
-  + resource "yandex_vpc_subnet" "default" {
-      + created_at     = (known after apply)
-      + folder_id      = (known after apply)
-      + id             = (known after apply)
-      + labels         = (known after apply)
-      + name           = "subnet"
-      + network_id     = (known after apply)
-      + v4_cidr_blocks = [
-          + "192.168.101.0/24",
-        ]
-      + v6_cidr_blocks = (known after apply)
-      + zone           = "ru-central1-b"
-    }
+Do you want to perform these actions in workspace "prod"?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
 
-Plan: 4 to add, 0 to change, 0 to destroy.
+  Enter a value: yes
 
-Changes to Outputs:
-  + yc_cloud_id       = "b1gtlo6uqrvrdckscbg8"
-  + yc_folder_id      = "b1g7jkg3844vv1nn5r1a"
-  + yc_v4_cidr_blocks = [
-      + "192.168.101.0/24",
-    ]
-  + yc_vpc_network    = "e2lclbkvfe9r5bd6m89g"
-  + yc_zone           = "ru-central1-b"
+yandex_compute_instance.main["second_vm_for_prod"]: Creating...
+yandex_compute_instance.main["first_vm_for_prod"]: Modifying... [id=epdhbu9ahpvmjcfiflqo]
+yandex_compute_instance.main["first_vm_for_prod"]: Modifications complete after 6s [id=epdhbu9ahpvmjcfiflqo]
+yandex_compute_instance.main["second_vm_for_prod"]: Still creating... [10s elapsed]
+yandex_compute_instance.main["second_vm_for_prod"]: Still creating... [20s elapsed]
+yandex_compute_instance.main["second_vm_for_prod"]: Still creating... [30s elapsed]
+yandex_compute_instance.main["second_vm_for_prod"]: Creation complete after 34s [id=epd3vbd3ejh5dslhiq0g]
 
-───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Apply complete! Resources: 1 added, 1 changed, 0 destroyed.
 
-Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run
-"terraform apply" now.
+Outputs:
+
+yc_cloud_id = "b1gtlo6uqrvrdckscbg8"
+yc_folder_id = "b1g7jkg3844vv1nn5r1a"
+yc_v4_cidr_blocks = [
+  "192.168.101.0/24",
+]
+yc_vpc_network = "enpbsku8oecgd8qfvc84"
+yc_zone = "ru-central1-b"
 root@dev1-10:~/netol_do/yc-states-backends/terraform# 
 
 ```

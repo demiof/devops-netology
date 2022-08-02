@@ -179,7 +179,7 @@ root@dev1-10:~/aws/terraform-provider-aws# grep '`name` -'  ./website/docs/r/sqs
 -->
     * Какому регулярному выражению должно подчиняться имя? 
 
-> Нашел для "name" валидирование по длине и регексп тут:
+> Нашел для "name" валидирование по длине и регекспу тут:
 
 ```bash
 
@@ -201,7 +201,7 @@ terraform-provider-aws/internal/service/schemas/schema.go
 
 ```
 
-> Нашел для "name" с кес конфликтует тут:  
+> Нашел для "name" с кем конфликтует тут:  
 
 ```bash
 

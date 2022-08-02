@@ -15,6 +15,7 @@
 1. Найдите, где перечислены все доступные `resource` и `data_source`, приложите ссылку на эти строки в коде на 
 гитхабе.   
 
+<!--
 ```bash
 
 
@@ -27,6 +28,29 @@ root@dev1-10:~/aws/terraform-provider-aws# grep -cR -A 15  "resource \"" ./ | gr
 ```
 [https://github.com/hashicorp/terraform-provider-aws/blob/main/internal/service/ec2/vpc_route_table_test.go](https://github.com/hashicorp/terraform-provider-aws/blob/main/internal/service/ec2/vpc_route_table_test.go)
 
+-->
+> Если же анализировать, то вроде как делается мап на тип string в схемах DataSource и Resourse тут:
+
+[https://github.com/hashicorp/terraform-provider-aws/blob/main/internal/provider/provider.go](https://github.com/hashicorp/terraform-provider-aws/blob/main/internal/provider/provider.go)
+
+> Сам же DataSource aws_sqs_queue описан тут: 
+
+```bash
+
+root@dev1-10:~/aws/terraform-provider-aws/internal/provider# grep -cinR ResourceQueue ../ | grep -v :0 | grep -v .*\.swp
+../service/mediaconvert/queue.go:11
+../service/sqs/queue_test.go:2
+../service/sqs/sweep.go:1
+../service/sqs/queue.go:15
+../service/sqs/queue_policy_test.go:2
+../service/sqs/queue_policy.go:9
+../service/connect/queue_test.go:1
+../service/connect/queue.go:9
+../provider/provider.go:4
+
+
+```
+<!--
 ```bash
 
 root@dev1-10:~/aws/terraform-provider-aws# grep -cR -A 15  "data \"" ./ | grep -v ":0" | awk -F ":" '{print $1, $2}' | grep 77
@@ -35,10 +59,16 @@ root@dev1-10:~/aws/terraform-provider-aws# vim ./internal/service/rds/instance_t
 
 ```
 [https://github.com/hashicorp/terraform-provider-aws/blob/main/internal/service/rds/instance_test.go](https://github.com/hashicorp/terraform-provider-aws/blob/main/internal/service/rds/instance_test.go)
+-->
 
 1. Для создания очереди сообщений SQS используется ресурс `aws_sqs_queue` у которого есть параметр `name`. 
     * С каким другим параметром конфликтует `name`? Приложите строчку кода, в которой это указано.
 
+
+
+
+
+<!--
 > Параметр`name` по всей видимости может (должен) конфликтовать с `arn`, что похоже из условия ниже в цикле по массиву attrName. Т.е. если не выполняется условие ниже, то fmt выводит ошибку "attrName is {значение его в rs.Primary.Attributes}; want {значение его в sqsQueueRs.Primary.Attributes} :
 
 ```go
@@ -133,9 +163,11 @@ func testAccQueueCheckDataSource(datasourceName, resourceName string) resource.T
         }
 
 ```
+-->
 
     * Какая максимальная длина имени? 
 
+<!--
 > Выходит 80 символов:
 
 ```bash
@@ -144,11 +176,63 @@ root@dev1-10:~/aws/terraform-provider-aws# grep '`name` -'  ./website/docs/r/sqs
 * `name` - (Optional) The name of the queue. Queue names must be made up of only uppercase and lowercase ASCII letters, numbers, underscores, and hyphens, and must be between 1 and 80 characters long. For a FIFO (first-in-first-out) queue, the name must end with the `.fifo` suffix. If omitted, Terraform will assign a random, unique name. Conflicts with `name_prefix`
 
 ```
-
+-->
     * Какому регулярному выражению должно подчиняться имя? 
 
-> Исходя из предыдущего, маленькие и Большие ASCII символы, цифры, подчеркивания и тире: ^[\d\w\_\-]{1,80}$
+> Нашел для "name" валидирование по длине и регексп тут:
 
+```bash
+
+terraform-provider-aws/internal/service/schemas/schema.go
+
+```
+
+```go
+
+			"name": {
+				Type:     schema.TypeString,
+				Required: true,
+				ForceNew: true,
+				ValidateFunc: validation.All(
+					validation.StringLenBetween(1, 385),
+					validation.StringMatch(regexp.MustCompile(`^[\.\-_A-Za-z@]+`), ""),
+				),
+			},
+
+```
+
+> Нашел для "name" с кес конфликтует тут:  
+
+```bash
+
+terraform-provider-aws/internal/service/sqs/queue.go
+
+```
+
+```go
+		"name": {
+			Type:          schema.TypeString,
+			Optional:      true,
+			Computed:      true,
+			ForceNew:      true,
+			ConflictsWith: []string{"name_prefix"},
+		},
+		"name_prefix": {
+			Type:          schema.TypeString,
+			Optional:      true,
+			Computed:      true,
+			ForceNew:      true,
+			ConflictsWith: []string{"name"},
+``` 
+> и 
+
+```go
+ValidateFunc: validation.StringLenBetween(1,127);
+```
+
+<!--
+> Исходя из предыдущего, маленькие и Большие ASCII символы, цифры, подчеркивания и тире: ^[\d\w\_\-]{1,80}$
+-->
 
 
 ## Задача 2. (Не обязательно) 

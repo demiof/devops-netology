@@ -224,11 +224,7 @@ terraform-provider-aws/internal/service/sqs/queue.go
 			ForceNew:      true,
 			ConflictsWith: []string{"name"},
 ``` 
-> и 
 
-```go
-ValidateFunc: validation.StringLenBetween(1,127);
-```
 
 <!--
 > Исходя из предыдущего, маленькие и Большие ASCII символы, цифры, подчеркивания и тире: ^[\d\w\_\-]{1,80}$

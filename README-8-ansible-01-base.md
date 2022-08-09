@@ -779,6 +779,7 @@ b71ffff566e3   pycontribs/fedora                          "/bin/bash"           
 
 
 
+
 ---
 
 ### Как оформить ДЗ?

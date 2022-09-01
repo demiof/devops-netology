@@ -24,7 +24,7 @@ root@dev1-10:~/ansible-playbook/playbook#
 9. Подготовьте README.md файл по своему playbook. В нём должно быть описано: что делает playbook, какие у него есть параметры и теги.
 10. Готовый playbook выложите в свой репозиторий, в ответ предоставьте ссылку на него.
 
-
+[https://github.com/demiof/devops-netology/tree/main/playbook](https://github.com/demiof/devops-netology/tree/main/playbook)
 
 ## Необязательная часть
 
@@ -40,5 +40,7 @@ root@dev1-10:~/ansible-playbook/playbook#
 ### Как оформить ДЗ?
 
 Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
+
+[https://github.com/demiof/devops-netology/tree/main/playbook/Readme.md](https://github.com/demiof/devops-netology/tree/main/playbook/Readme.md)
 
 ---

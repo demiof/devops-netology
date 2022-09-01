@@ -1,0 +1,21 @@
+server.port: 5601
+server.host: 0.0.0.0
+elasticsearch.hosts: ["http://localhost:9200"]
+logging:
+    appenders:
+        rolling-file:
+            type: rolling-file
+            fileName: {{ kibana_log_file }}
+            policy:
+                type: size-limit
+                size: 50mb
+            strategy:
+                type: numeric
+                pattern: '=%i'
+                max: 2
+            layout:
+                type: pattern
+    loggers:
+        -   name: http.server.response
+            appenders: [rolling-file] 
+            level: debug

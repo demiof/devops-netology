@@ -1,0 +1,12 @@
+[Unit]
+Description=Kibana
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/default/elasticsearch
+ExecStart={{ kibana_home_bin_kbn }} serve
+User = {{ elastic_user}}
+Group = {{ elastic_group}}
+
+[Install]
+WantedBy=multi-user.target

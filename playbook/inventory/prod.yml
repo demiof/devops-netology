@@ -1,0 +1,56 @@
+---
+all:
+  children:
+    some_to_install:
+      children:
+        dev_hosts:
+          hosts:
+            localhost
+          vars:
+            ansible_connection: local
+            host_platform: "x86_64"
+            #elastic_version: "7.10.1"
+            elastic_version: "8.4.0"
+            elastic_home: "/opt/elastic/{{ elastic_version }}"
+            kibana_version: "8.4.0"
+            kibana_home: "/opt/kibana/{{ kibana_version }}"
+            ansible_playbook_dir: "/root/ansible-playbook"            
+        elasticsearch:
+          hosts:
+            192.168.1.200
+          vars:
+            #elastic_version: "7.10.1"
+            elastic_version: "8.4.0"
+            elastic_home: "/opt/elastic/{{ elastic_version }}"
+            elastic_home_bin_es: "/opt/elastic/{{ elastic_version }}/bin/elasticsearch"
+            ansible_playbook_dir: "/root/ansible-playbook"      
+        kibana:
+          hosts:
+            192.168.1.200
+          vars:
+            kibana_version: "8.4.0"
+            kibana_home: "/opt/kibana/{{ kibana_version }}"
+            kibana_home_bin_kbn: "{{ kibana_home }}/bin/kibana"    
+      vars:
+        ansible_user: "{{vm_user}}"
+        ansible_ssh_private_key_file: ~/.ssh/id_rsa 
+
+    prox_vms:
+      children:
+        prox_vms_vmbr404:
+          hosts:
+            192.168.1.20[0:1]
+      vars:    
+        ansible_user: "{{vm_user}}"
+        ansible_ssh_private_key_file: ~/.ssh/id_rsa 
+
+    prox_hvs:
+      children:
+        hvs_example:
+          hosts:
+            vm.example.ru
+      vars:    
+        ansible_user: "ansible"
+        ansible_ssh_private_key_file: ~/.ssh/id_rsa
+      
+

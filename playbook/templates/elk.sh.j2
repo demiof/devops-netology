@@ -1,0 +1,17 @@
+# Warning: This file is Ansible Managed, manual changes will be overwritten on next playbook run.
+#!/usr/bin/env bash
+
+export ES_HOME={{ elastic_home }}
+export ES_DATA={{ elastic_data }}
+export ES_LOGS={{ elastic_logs }}
+export ES_NETWORK_HOST={{ elastic_network_host }}
+export ES_PORT={{ elastic_port }}
+export ES_SEED_HOST={{ elastic_discovery_seed_hosts }}
+export ES_INITIAL_MASTER_NODES={{ elastic_initial_master_nodes }}
+export ES_JVM_CONFIG={{ elastic_home }}/config/jvm.options.d/
+
+export KBN_HOME={{ kibana_home }}
+export KBN_PATH_CONF={{ kibana_home }}/config
+
+export PATH=$PATH:$ES_HOME/bin
+

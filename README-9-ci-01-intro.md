@@ -27,9 +27,9 @@
 
 Если всё отработало в рамках ожидания - выгрузить схемы workflow для импорта в XML. Файлы с workflow приложить к решению задания.
 
-[Jira_9.1/Bug tikets workflow.xml](Jira_9.1/Bug tikets workflow.xml)
+[ "Jira_9.1/Bug tikets workflow.xml" ]( "Jira_9.1/Bug tikets workflow.xml" )
 
-[Jira_9.1/Bug tikets workflow.xml](Jira_9.1/Others tikets workflow.xml)
+[ "Jira_9.1/Bug tikets workflow.xml" ]( "Jira_9.1/Others tikets workflow.xml" )
 
 
 ---

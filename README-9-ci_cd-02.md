@@ -166,7 +166,7 @@ root@dev1-10:~/netol_do/devops-netology/ci_cd/example#
 3. Проверяем, что все файлы загрузились успешно
 4. В ответе присылаем файл `maven-metadata.xml` для этого артефекта
 
-![maven-metadata](ci_cd/maven-metadata.xml)
+[ci_cd/maven-metadata.xml](ci_cd/maven-metadata.xml)
 
 ### Знакомство с Maven
 

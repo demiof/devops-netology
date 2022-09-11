@@ -1,0 +1,27 @@
+---
+#java_jdk_version: 11.0.11
+java_jdk_version: 11.0.28
+#java_oracle_jdk_package: jdk-11.0.11_linux-x64_bin.tar.gz
+java_oracle_jdk_package: openjdk-11+28_linux-x64_bin.tar.gz
+api_user: ansible@pam
+api_host: vm.linkintel.ru
+api_token_id: TokenID2
+api_token_secret: xxx
+vm_user: ansible
+vm_pass: ansible
+vm_key: ~/.ssh/id_rsa.pub
+vm_authorize_user_target_host: root
+vm_pool: thinpool
+vm_vmbr: vmbr404
+vm_conn_type: ethernet #choose from: bond, bond-slave, bridge, bridge-slave, dummy, ethernet, generic, gre, infiniband, ipip, sit, team, team-slave, vlan, vxlan, wifi, gsm, wireguard, vpn
+
+vm_ipv4_pref: '192.168.1.'
+vm_cidr: '/24'
+vm_netmask: '255.255.255.0'
+vm_gateway: '192.168.1.1'
+vm_dns: 'vm.linkintel.ru'
+vm_dns2: '8.8.8.8'
+vm_dns3: '77.88.8.8'
+vm_iface_name: net0
+
+if_exist: 1

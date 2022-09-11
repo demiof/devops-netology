@@ -1,0 +1,12 @@
+---
+
+elastic_user: elasticsearch
+elastic_group: elasticsearch
+
+elastic_data: "/var/lib/elasticsearch"
+elastic_logs: "/var/log/elasticsearch"
+elastic_network_host: "0.0.0.0"
+elastic_port: 9200
+elastic_discovery_seed_hosts: "192.168.1.200"
+elastic_initial_master_nodes: "192.168.1.200"
+

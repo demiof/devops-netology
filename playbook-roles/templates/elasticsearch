@@ -1,0 +1,14 @@
+ES_LOGS=/var/log/elasticsearch
+ES_INITIAL_MASTER_NODES=192.168.1.200
+XDG_SESSION_TYPE=tty
+ES_NETWORK_HOST=0.0.0.0
+#ES_JVM_CONFIG=/opt/elastic/8.4.0/config/jvm.options.d/
+ES_PORT=9200
+ES_NETWORK_HOST=0.0.0.0
+ES_PORT=9200
+ES_SEED_HOST=192.168.1.200
+ES_DATA=/var/lib/elasticsearch
+ES_HOME=/opt/elastic/8.4.0
+
+KBN_HOME=/opt/kibana/8.4.0
+KBN_PATH_CONF=/opt/kibana/8.4.0/config

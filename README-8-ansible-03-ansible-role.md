@@ -75,7 +75,7 @@ drwxr-xr-x 8 root root 4.0K Sep 10 21:12 jdk-11
 
 ```
 
-[https://github.com/demiof/ansible-playbook-roles/blob/master/files/screenshot-kibana.png](https://github.com/demiof/ansible-playbook-roles/blob/master/files/screenshot-kibana.png)
+![Happy start!](https://github.com/demiof/ansible-playbook-roles/blob/master/files/screenshot-kibana.png)
 
 
 11. В ответ приведите ссылки на оба репозитория с roles и одну ссылку на репозиторий с playbook.

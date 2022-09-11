@@ -1,0 +1,4 @@
+---
+kibana_version: "8.4.0"
+kibana_home: "/opt/kibana/{{ kibana_version }}"
+kibana_log_file: "/var/log/elasticsearch/kibana.log"

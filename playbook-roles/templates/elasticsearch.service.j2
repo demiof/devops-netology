@@ -1,0 +1,12 @@
+[Unit]
+Description=Elasticsearch
+
+[Service]
+Type=forking
+EnvironmentFile=-/etc/default/elasticsearch
+ExecStart={{ elastic_home_bin_es }} -d
+User = {{ elastic_user}}
+Group = {{ elastic_group}}
+
+[Install]
+WantedBy=multi-user.target

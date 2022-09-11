@@ -1,0 +1,16 @@
+---
+node.name: test-data-200
+cluster.name: logging-test
+
+path:
+    data: "${ES_HOME}"
+    logs: "${ES_LOGS}"
+
+network.host: "${ES_NETWORK_HOST}"
+http.port: "${ES_PORT}"
+
+#discovery.seed_hosts: "${ES_SEED_HOST}"
+cluster.initial_master_nodes: "${ES_INITIAL_MASTER_NODES}"
+
+xpack.security.enabled: false
+xpack.security.enrollment.enabled: true

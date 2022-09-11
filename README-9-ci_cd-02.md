@@ -141,7 +141,7 @@ root@dev1-10:~/netol_do/devops-netology/ci_cd/example#
 8. Запускаем анализатор повторно - проверяем, что QG пройдены успешно
 9. Делаем скриншот успешного прохождения анализа, прикладываем к решению ДЗ
 
-[!SonarQube тест fail.py пройден](ci_cd/Passed_test_sonar_qube.png)
+![SonarQube тест fail.py пройден](ci_cd/Passed_test_sonar_qube.png)
 
 ## Знакомство с Nexus
 

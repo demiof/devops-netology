@@ -175,6 +175,19 @@ root@dev1-10:~/netol_do/devops-netology/ci_cd/example#
 1. Скачиваем дистрибутив с [maven](https://maven.apache.org/download.cgi)
 2. Разархивируем, делаем так, чтобы binary был доступен через вызов в shell (или меняем переменную PATH или любой другой удобный вам способ)
 3. Проверяем `mvn --version`
+
+```bash
+
+root@dev1-10:~/netol_do/devops-netology/ci_cd/mvn# mvn --version
+Apache Maven 3.8.6 (84538c9988a25aec085021c365c560670ad80f63)
+Maven home: /root/netol_do/devops-netology/ci_cd/apache-maven/apache-maven-3.8.6
+Java version: 11, vendor: Oracle Corporation, runtime: /opt/jdk/11.0.28
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "5.10.0-13-amd64", arch: "amd64", family: "unix"
+root@dev1-10:~/netol_do/devops-netology/ci_cd/mvn# 
+
+```
+
 4. Забираем директорию [mvn](./mvn) с pom
 
 ### Основная часть
